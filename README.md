@@ -74,6 +74,35 @@ To make this more realistic, let's just add an infinite loop that gets the time 
 
 KCB has additional support for more advanced features of the sensor such as face tracking and voice recognition. Check out the samples folder for working code that illustrates how to get up and running quickly. 
 
+KCB builds with both face tracking and voice recognition enabled. To disable these items remove the following preprocessor defines from the C++ preprocessor properties of the KinectCommonBridge project:
+
+	KCB_ENABLE_FT
+	KCB_ENABLE_SPEECH
+
+To enable face tracking and voice recognition in your own project, you will need to add the following preprocessor defines to your project's  C++ preprocessor properties:
+
+	KCB_ENABLE_FT
+	KCB_ENABLE_SPEECH
+	
+If you enable face tracking with the KCB_ENABLE_FT preprocessor define, you will need to include the following dll's with your application:
+
+	FaceTrackData.dll
+	FaceTrackLib.dll
+	
+These DLLs are part of the Kinect for Windows Developer Toolkit and are located in C:\Program Files\Microsoft SDKs\Kinect\Developer Toolkit v1.8.0\Redist. You will need to copy the correct versions of the DLLs depending on if you are doing a Win32 or x64 build. The Win32 DLLs are in the Redist\x86 folder and the x64 DLLs are in the Redist\amd64 folder. You can use the following post build event commands to copy the DLLs to your project's output directory:
+
+Win32 Post Build Event
+
+	xcopy "$(FTSDK_DIR)Redist\x86\FaceTrackLib.dll" "$(OutDir)" /eiycq
+	xcopy "$(FTSDK_DIR)Redist\x86\FaceTrackData.dll" "$(OutDir)" /eiycq
+
+	
+x64 Post Build Event
+
+	xcopy "$(FTSDK_DIR)Redist\amd64\FaceTrackLib.dll" "$(OutDir)" /eiycq
+	xcopy "$(FTSDK_DIR)Redist\amd64\FaceTrackData.dll" "$(OutDir)" /eiycq
+
+
 ## Additional Resources
 
 * Kinect for Windows - Getting Started
