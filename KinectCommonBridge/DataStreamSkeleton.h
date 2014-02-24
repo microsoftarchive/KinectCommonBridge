@@ -18,16 +18,21 @@ public:
     DataStreamSkeleton();
     virtual ~DataStreamSkeleton();
 
-    virtual void Initialize( _In_ INuiSensor* pNuiSensor );
-    virtual void Initialize( bool bSeated, KINECT_SKELETON_SELECTION_MODE mode, _In_ INuiSensor* pNuiSensor, _Out_opt_ const NUI_TRANSFORM_SMOOTH_PARAMETERS* pSmoothParams );
+    virtual void Initialize(_In_ INuiSensor* pNuiSensor);
+    virtual void Initialize(bool bSeated, KINECT_SKELETON_SELECTION_MODE mode, _In_ INuiSensor* pNuiSensor, _Inout_opt_ NUI_TRANSFORM_SMOOTH_PARAMETERS* pSmoothParams);
 
     virtual HRESULT StartStream();
     virtual void StopStream();
+    virtual void PauseStream(bool bPaused);
 
     void SetSeatedMode( bool seated );
     void SetChooserMode( KINECT_SKELETON_SELECTION_MODE mode );
 
     HRESULT GetFrameData( _Inout_ NUI_SKELETON_FRAME& skeletonFrame );
+	DWORD* GetTrackedIDs() { return m_stickyIDs; }
+
+protected:
+    virtual void CopyData(_In_ void* pImageFrame);
 
 private:
     // compare the skeleton smooth params

@@ -15,9 +15,14 @@ See the Apache 2 License for the specific language governing permissions and lim
 #pragma once
 
 #include "KinectCommonBridgeLib.h"
+
 #include "DataStreamColor.h"
 #include "DataStreamDepth.h"
 #include "DataStreamSkeleton.h"
+#include "DataStreamAudio.h"
+#include "CoordinateMapper.h"
+
+class FaceTracker;
 
 class KinectSensor
 {
@@ -33,7 +38,7 @@ public:
     // enabling streams with full parameters exposed
     void EnableColorStream( NUI_IMAGE_TYPE type, NUI_IMAGE_RESOLUTION resolution );
     void EnableDepthStream( bool nearModeOn, NUI_IMAGE_RESOLUTION resolution );
-    void EnableSkeletonStream( bool bSeatedSkeletons, KINECT_SKELETON_SELECTION_MODE mode, _Out_opt_ const NUI_TRANSFORM_SMOOTH_PARAMETERS *pSmoothParams );
+    void EnableSkeletonStream( bool bSeatedSkeletons, KINECT_SKELETON_SELECTION_MODE mode, _Inout_opt_ NUI_TRANSFORM_SMOOTH_PARAMETERS *pSmoothParams );
 
     // start stream
     HRESULT StartStreams();
@@ -70,13 +75,53 @@ public:
     void GetDepthFrameFormat( _Inout_ KINECT_IMAGE_FRAME_FORMAT* pFrame );
 
     // get the frame data
-    HRESULT GetColorFrame( ULONG cbBufferSize, _Out_cap_(cbBufferSize) BYTE* pColorBuffer, _Out_opt_ LONGLONG* liTimeStamp );
-    HRESULT GetDepthFrame( ULONG cbBufferSize, _Out_cap_(cbBufferSize) BYTE* pDepthBuffer, _Out_opt_ LONGLONG* liTimeStamp );
+    HRESULT GetColorFrame( ULONG cBufferSize, _Inout_cap_(cBufferSize) BYTE* pColorBuffer, _Out_opt_ LONGLONG* liTimeStamp );
+    HRESULT GetDepthFrame( ULONG cBufferSize, _Inout_cap_(cBufferSize) BYTE* pDepthBuffer, _Out_opt_ LONGLONG* liTimeStamp );
     HRESULT GetSkeletonFrame( _Inout_ NUI_SKELETON_FRAME& skeletonFrame );
+    HRESULT GetDepthPixels( ULONG cDepthPixels, _Inout_cap_(cDepthPixels) NUI_DEPTH_IMAGE_PIXEL* pDepthPixels, _Out_opt_ LONGLONG* liTimeStamp );
+    HRESULT GetColorFrameFromDepthPoints(
+        DWORD cDepthPoints, _In_count_(cDepthPoints) NUI_DEPTH_IMAGE_POINT *pDepthPoints,
+        ULONG cBufferSize, _Inout_cap_(cBufferSize) BYTE* pColorBuffer, _Out_opt_ LONGLONG* liTimeStamp);
+
+    // audio/speech stream
+    void EnableAudioStream(_In_opt_ AEC_SYSTEM_MODE* eAECSystemMode, _In_opt_ bool* bGainBounder);
+    HRESULT StartAudioStream();
+    void PauseAudioStream(bool bPause);
+    void StopAudioStream();
+
+    KINECT_STREAM_STATUS GetAudioStreamStatus();
+    HRESULT GetAudioSample(
+        _Out_ DWORD* cbProduced, _Out_ BYTE** ppbOutputBuffer,
+        _Out_ DWORD* dwStatus, _Out_opt_ LONGLONG *llTimeStamp, _Out_opt_ LONGLONG *llTimeLength,
+        _Out_opt_ double *beamAngle, _Out_opt_ double *sourceAngle, _Out_opt_ double *sourceConfidence );
     
+    HRESULT SetInputVolumeLevel(float fLevelDB);
+
+#ifdef KCB_ENABLE_SPEECH
+	void EnableSpeech(_In_ const WCHAR* wcGrammarFileName, _In_opt_ KCB_SPEECH_LANGUAGE* sLanguage, _In_opt_ ULONGLONG* ullEventInterest, _In_opt_ bool* bAdaptation);
+    HRESULT StartSpeech();
+    bool SpeechEventReady();
+    HRESULT GetSpeechEvent( _In_ SPEVENT* pSPEvent, _In_ ULONG* pulFetched );
+#endif
+
+#ifdef KCB_ENABLE_FT
+    HRESULT EnableFaceTracking(bool bNearMode = false);
+    void DisableFaceTracking();
+    bool GetColorStreamCameraConfig(_Out_ FT_CAMERA_CONFIG& config) const;
+    bool GetDepthStreamCameraConfig(_Out_ FT_CAMERA_CONFIG& config) const;
+
+    HRESULT GetFaceTrackingResult( _Out_ IFTResult** ppResult );
+	float GetXCenterFace();
+	float GetYCenterFace();
+    HRESULT GetFaceTrackingImage(IFTImage** pImage);
+	HRESULT GetFaceTracker( IFTFaceTracker** pFaceTracker);
+
+#endif
+
 public: // getters
     const WCHAR* GetPortID() const { return m_wsPortID.c_str(); }
     KINECT_SENSOR_STATUS GetKinectSensorStatus() { return m_eStatus; }
+    CoordinateMapper& GetCoordinateMapper() { return *m_pCoordinateMapper.get(); }
 
 protected:
     // for sensor interaction with the object
@@ -84,7 +129,7 @@ protected:
 
     // handle sensor notification updates that come from the manager
     void NuiStatusNotification( _In_z_ const WCHAR* wcPortID, HRESULT hrStatus );
-    bool IsAvailable();
+    bool IsStarted();
 
 private:
     // internal for setting up the device
@@ -102,6 +147,8 @@ private:
     void EnableColorStream();
     void EnableDepthStream();
     void EnableSkeletonStream();
+    void EnableAudioStream();
+    void EnableSpeech();
 
     // populate the list of events
     void GetWaitEvents( _Inout_ std::vector<HANDLE>& events );
@@ -120,7 +167,13 @@ private:
     HRESULT                 m_hrLast;
     KINECT_SENSOR_STATUS    m_eStatus;
 
-    std::shared_ptr<DataStreamColor>    m_pColorStream;
-    std::shared_ptr<DataStreamDepth>    m_pDepthStream;
-    std::shared_ptr<DataStreamSkeleton> m_pSkeletonStream;
+    std::unique_ptr<DataStreamColor>    m_pColorStream;
+    std::unique_ptr<DataStreamDepth>    m_pDepthStream;
+    std::unique_ptr<DataStreamSkeleton> m_pSkeletonStream;
+    std::unique_ptr<DataStreamAudio>    m_pAudioStream;
+
+    std::unique_ptr<CoordinateMapper>   m_pCoordinateMapper;
+#ifdef KCB_ENABLE_FT
+    std::unique_ptr<FaceTracker>        m_pFaceTracker;
+#endif
 };

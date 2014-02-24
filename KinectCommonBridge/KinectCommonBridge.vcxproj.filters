@@ -28,6 +28,21 @@
     <ClCompile Include="SensorManager.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="CoordinateMapper.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="DataStreamAudio.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="MediaBuffer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="KinectAudioStream.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="FaceTracker.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AutoLock.h">
@@ -61,6 +76,21 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CoordinateMapper.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MediaBuffer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStreamAudio.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="KinectAudioStream.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="FaceTracker.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

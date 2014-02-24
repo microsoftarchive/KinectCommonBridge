@@ -33,11 +33,12 @@ DataStreamSkeleton::DataStreamSkeleton()
 }
 DataStreamSkeleton::~DataStreamSkeleton()
 {
+    StopStream();
 }
 
-void DataStreamSkeleton::Initialize( _In_ INuiSensor* pNuiSensor )
+void DataStreamSkeleton::Initialize(_In_ INuiSensor* pNuiSensor)
 {
-    AttachDevice( pNuiSensor );
+    DataStream::Initialize(pNuiSensor);
 }
 
 bool DataStreamSkeleton::IsEqual( NUI_TRANSFORM_SMOOTH_PARAMETERS& param1, NUI_TRANSFORM_SMOOTH_PARAMETERS& param2 )
@@ -54,8 +55,10 @@ bool DataStreamSkeleton::IsEqual( NUI_TRANSFORM_SMOOTH_PARAMETERS& param1, NUI_T
    return false;
 }
 
-void DataStreamSkeleton::Initialize( bool bSeated, KINECT_SKELETON_SELECTION_MODE mode, _In_ INuiSensor* pNuiSensor, _Out_opt_ const NUI_TRANSFORM_SMOOTH_PARAMETERS* pSmoothParams )
+void DataStreamSkeleton::Initialize( bool bSeated, KINECT_SKELETON_SELECTION_MODE mode, _In_ INuiSensor* pNuiSensor, _Inout_opt_ NUI_TRANSFORM_SMOOTH_PARAMETERS* pSmoothParams )
 {
+    AutoLock lock(m_nuiLock);
+
     bool bChanged = false;
 
     if( m_seated != bSeated )
@@ -88,19 +91,21 @@ void DataStreamSkeleton::Initialize( bool bSeated, KINECT_SKELETON_SELECTION_MOD
             bChanged = false;
         }
     }
-
-    // send the sensor to the base class
-    Initialize( pNuiSensor );
     
     if( bChanged )
     {
         m_started = false;
     }
+
+    // send the sensor to the base class
+    Initialize( pNuiSensor );
 }
 
 void DataStreamSkeleton::SetSeatedMode( bool seated )
 {
-    if( m_seated != seated )
+    AutoLock lock(m_nuiLock);
+
+    if (m_seated != seated)
     {
         m_seated = seated;
         StartStream();  // Restart stream with new parameter value
@@ -108,7 +113,9 @@ void DataStreamSkeleton::SetSeatedMode( bool seated )
 }
 void DataStreamSkeleton::SetChooserMode( KINECT_SKELETON_SELECTION_MODE mode )
 {
-    if( m_chooserMode != mode )
+    AutoLock lock(m_nuiLock);
+
+    if (m_chooserMode != mode)
     {
         m_chooserMode = mode;
         StartStream();  // Restart stream with new parameter value
@@ -117,6 +124,8 @@ void DataStreamSkeleton::SetChooserMode( KINECT_SKELETON_SELECTION_MODE mode )
 
 HRESULT DataStreamSkeleton::StartStream()
 {
+    AutoLock lock(m_nuiLock);
+
     // if there is no device, disable the stream 
     if( nullptr == m_pNuiSensor )
     {
@@ -124,12 +133,11 @@ HRESULT DataStreamSkeleton::StartStream()
         return E_NUI_STREAM_NOT_ENABLED;
     }
 
-    if( m_started )
+    if( m_started && !m_paused )
     {
         return S_OK;
     }
 
-    AutoLock lock( m_nuiLock );
     if( HasSkeletalEngine(m_pNuiSensor) )
     {
         if( m_paused ) 
@@ -163,11 +171,24 @@ HRESULT DataStreamSkeleton::StartStream()
 
 void DataStreamSkeleton::StopStream()
 {
+    AutoLock lock(m_nuiLock);
+
     RemoveDevice();
+}
+
+void DataStreamSkeleton::PauseStream(bool bPaused)
+{
+    AutoLock lock(m_nuiLock);
+
+    m_paused = bPaused;
+
+    StartStream();
 }
 
 HRESULT DataStreamSkeleton::GetFrameData( _Inout_ NUI_SKELETON_FRAME& pSkeletonFrame )
 {
+    AutoLock lock(m_nuiLock);
+
     HRESULT hr = S_OK;
 
     // if we haven't started the stream do it now
@@ -178,12 +199,11 @@ HRESULT DataStreamSkeleton::GetFrameData( _Inout_ NUI_SKELETON_FRAME& pSkeletonF
         {
             return hr;
         }
-    }        
+    }
 
     if( m_paused ) 
     {
-        // Disable tracking skeleton
-        return m_pNuiSensor->NuiSkeletonTrackingDisable();
+        return S_OK;
     }
 
     // Populate the frame
@@ -205,6 +225,11 @@ HRESULT DataStreamSkeleton::GetFrameData( _Inout_ NUI_SKELETON_FRAME& pSkeletonF
     UpdateTrackedSkeletons( pSkeletonFrame );
     
     return hr;
+}
+
+void DataStreamSkeleton::CopyData(_In_ void* pImageFrame)
+{
+    NUI_SKELETON_FRAME* pFrame = reinterpret_cast<NUI_SKELETON_FRAME*>( pImageFrame );
 }
 
 void DataStreamSkeleton::UpdateTrackedSkeletons( _In_ NUI_SKELETON_FRAME& pSkeletonFrame )
@@ -379,4 +404,3 @@ void DataStreamSkeleton::FindMostActiveIDs(DWORD trackIDs[TrackIDIndexCount])
         trackIDs[SecondTrackID]       = m_dwActiveID2;
     }
 }
-

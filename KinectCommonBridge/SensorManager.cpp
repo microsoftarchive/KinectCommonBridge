@@ -211,7 +211,7 @@ std::shared_ptr<KinectSensor> SensorManager::GetDefaultSensor()
     for(; iter != m_kinectSensors.end(); ++iter)
     {
         // check to see if we can use it; 
-        if( m_kinectSensors.size() == 1 || SUCCEEDED(iter->second->IsAvailable()) )
+        if (m_kinectSensors.size() == 1 || !iter->second->IsStarted())
         {
             // it is available so return this one;
             break;

@@ -16,6 +16,13 @@ See the Apache 2 License for the specific language governing permissions and lim
 
 #include "KinectCommonBridgeLib.h"
 #include "CriticalSection.h"
+#ifdef KCB_ENABLE_FT
+#include <FaceTrackLib.h>
+typedef IFTImage* (__stdcall *FTCreateImageProc)();
+#endif
+
+class FaceTracker;
+
 
 // abstract class to represent streams from the KinectSensor
 // the Sensor will manage which instance of the sensor to use
@@ -40,25 +47,39 @@ public:
     // returns the handle to the frame ready event 
     virtual HANDLE GetFrameReadyEvent();
 
+#ifdef KCB_ENABLE_FT
+    const FT_CAMERA_CONFIG& GetCameraConfig() const { return m_cameraConfig; }
+#endif
+
 protected:
+    friend FaceTracker;
+
     // initialize with an instance of the sensor
-    virtual void Initialize( _In_ INuiSensor* pNuiSensor ) = 0;
+    virtual void Initialize( _In_ INuiSensor* pNuiSensor );
 
     // manage the sensor that will be used by the stream
-    virtual void AttachDevice( _In_ INuiSensor* pNuiSensor );
     virtual void RemoveDevice();
 
     // methods to get the frame data from the sensor
-    virtual HRESULT ProcessImageFrame( _In_ NUI_IMAGE_FRAME *pImageFrame, ULONG cbBufferSize, _Out_cap_(cbBufferSize) BYTE* pImageBuffer, _Out_opt_ LONGLONG* liTimeStamp );
+    virtual HRESULT ProcessImageFrame( _Out_opt_ LONGLONG* liTimeStamp );
     virtual HRESULT ProcessSkeletonFrame( _Inout_ NUI_SKELETON_FRAME& skeletonFrame );
 
+    virtual void CopyData( _In_ void* pImageFrame ) = 0; 
+
+
 protected:
-    CriticalSection            m_nuiLock;
-    CComPtr<INuiSensor>        m_pNuiSensor;
-    HANDLE                    m_hStreamHandle;
-    HANDLE                    m_hFrameReadyEvent;
+    CriticalSection         m_nuiLock;
+    CComPtr<INuiSensor>     m_pNuiSensor;
+
+    HANDLE          m_hStreamHandle;
+    HANDLE          m_hFrameReadyEvent;
+
+    NUI_IMAGE_FRAME m_ImageFrame;
+    NUI_SKELETON_FRAME	m_skeletonFrame;
 
     bool m_paused;
     bool m_started;
     bool m_bPollingMode;
+
+    FT_CAMERA_CONFIG	m_cameraConfig;
 };
