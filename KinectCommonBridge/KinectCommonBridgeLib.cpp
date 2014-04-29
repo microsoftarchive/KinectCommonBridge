@@ -18,6 +18,12 @@ See the Apache 2 License for the specific language governing permissions and lim
 #include "SensorManager.h"
 #include "CoordinateMapper.h"
 
+// determine if the handle is valid
+KINECT_CB bool APIENTRY KinectIsHandleValid( KCBHANDLE kcbHandle )
+{
+	return KCB_INVALID_HANDLE != kcbHandle;
+}
+
 // for enumerating sensors
 KINECT_CB UINT APIENTRY KinectGetPortIDCount()
 {
