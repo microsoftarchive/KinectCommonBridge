@@ -29,6 +29,8 @@ See the Apache 2 License for the specific language governing permissions and lim
 #include <sapi.h>
 #include <sphelper.h>
 
+//TODO: switch to ComSmartPtr
+//#include "ComSmartPtr.h"
 #include <atlbase.h>
 
 #include <objbase.h>
