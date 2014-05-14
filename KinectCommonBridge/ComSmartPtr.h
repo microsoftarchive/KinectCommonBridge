@@ -27,6 +27,7 @@ class ComSmartPtr
 {
 public:
 	ComSmartPtr(){m_Ptr = nullptr;}
+	
 	//TODO: try 'explicit'
 	ComSmartPtr(INTERFACE* lPtr)
 	{
@@ -38,6 +39,7 @@ public:
 			m_Ptr->AddRef();
 		}
 	}
+
 	ComSmartPtr(const ComSmartPtr<INTERFACE, piid>& refComPtr)
 	{
 		m_Ptr = nullptr;
@@ -49,6 +51,7 @@ public:
 			m_Ptr->AddRef();
 		}
 	}
+
 	ComSmartPtr(IUnknown* pIUnknown, IID iid)
 	{
 		m_Ptr = nullptr;
@@ -59,6 +62,7 @@ public:
 			pIUnknown->QueryInterface(iid, (void**)&m_Ptr);
 		}
 	}
+
 	~ComSmartPtr()
 	{
 		if (m_Ptr)
@@ -74,21 +78,37 @@ public:
 		assert(m_Ptr != nullptr);
         return m_Ptr;
     }
+
 	INTERFACE& operator*() const
     {
         assert(m_Ptr != nullptr);
 		return *m_Ptr;
     }
+
 	INTERFACE** operator&()
     {
         assert(m_Ptr != nullptr);
         return &m_Ptr;
     }
+
 	INTERFACE* operator->() const
 	{
 		assert(m_Ptr != nullptr);
 		return m_Ptr;
 	}
+
+	bool operator==(const INTERFACE& lPtr) const
+	{
+		assert(m_Ptr != nullptr);
+		return m_Ptr == lPtr;
+	}
+
+	bool operator!=(const INTERFACE& lPtr) const
+	{
+		assert(m_Ptr != nullptr);
+		return !(m_Ptr == lPtr);
+	}
+
 	INTERFACE* operator=(INTERFACE* lPtr)
 	{
 		assert(lPtr != nullptr);
@@ -101,6 +121,7 @@ public:
 		m_Ptr = lPtr;
 		return m_Ptr;
 	}
+
 	INTERFACE* operator=(IUnknown* pIUnknown)
     {
 		assert(pIUnknown != nullptr);
@@ -110,6 +131,7 @@ public:
 		assert(m_Ptr != nullptr);
 		return m_Ptr;
     }
+
 	INTERFACE* operator=(const ComSmartPtr<INTERFACE, piid>& RefComPtr)
 	{
 		assert(&RefComPtr != nullptr);
@@ -122,6 +144,7 @@ public:
 		}
 		return m_Ptr;
 	}
+
 	void Attach(INTERFACE* lPtr)
     {
         if (lPtr)
@@ -130,12 +153,14 @@ public:
 			m_Ptr = lPtr;
 		}
     }
+
     INTERFACE* Detach()
     {
         INTERFACE* lPtr = m_Ptr;
         m_Ptr = nullptr;
         return lPtr;
     }
+
 	void Release()
 	{
 		if (m_Ptr)
@@ -144,15 +169,16 @@ public:
 			m_Ptr = nullptr;
 		}
 	}
+
 	bool IsEqualObject(IUnknown* pOther)
 	{
 		assert(pOther != nullptr);
 		IUnknown* pUnknown = nullptr;
 		//TODO: reinterpret_cast
 		m_Ptr->QueryInterface(IID_IUnknown, (void**)&pUnknown);
-        BOOL Result = (pOther == pUnknown) ? true : false;
+        bool result = (pOther == pUnknown) ? true : false;
 		pUnknown->Release();
-		return Result;
+		return result;
 	}
 
 private:
