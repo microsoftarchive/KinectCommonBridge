@@ -85,8 +85,8 @@ private:
     HRESULT AllocateSkeletonPoints(NUI_IMAGE_RESOLUTION eResolution);
 
 private:
-    CriticalSection                 m_nuiLock;
-    CComPtr<INuiSensor>             m_pNuiSensor;
+    CriticalSection						m_nuiLock;
+    ComSmartPtr<INuiSensor>             m_pNuiSensor;
 
-    CComPtr<INuiCoordinateMapper>   m_pNuiCoordinateMapper;
+    ComSmartPtr<INuiCoordinateMapper>   m_pNuiCoordinateMapper;
 };

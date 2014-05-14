@@ -13,7 +13,6 @@ See the Apache 2 License for the specific language governing permissions and lim
 ***********************************************************************************************************/
 #pragma once
 
-// require <assert>
 #include "stdafx.h"
 
 #ifndef _COMSMARTPTR_H_
@@ -21,6 +20,7 @@ See the Apache 2 License for the specific language governing permissions and lim
 
 #include <bemapiset.h>
 #include <unknwn.h>
+#include <assert.h>
 
 template<class INTERFACE, const IID* piid = nullptr>
 class ComSmartPtr
@@ -127,7 +127,7 @@ public:
 		assert(pIUnknown != nullptr);
 		assert(piid != nullptr);
 		//TODO: reinterpret_cast
-        pIUnknown->QueryInterface(*piid, (void**)&m_Ptr);
+        pIUnknown->QueryInterface(*piid, (void**) &m_Ptr);
 		assert(m_Ptr != nullptr);
 		return m_Ptr;
     }
@@ -175,7 +175,7 @@ public:
 		assert(pOther != nullptr);
 		IUnknown* pUnknown = nullptr;
 		//TODO: reinterpret_cast
-		m_Ptr->QueryInterface(IID_IUnknown, (void**)&pUnknown);
+		m_Ptr->QueryInterface(IID_IUnknown, (void**) &pUnknown);
         bool result = (pOther == pUnknown) ? true : false;
 		pUnknown->Release();
 		return result;
