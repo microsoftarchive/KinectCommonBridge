@@ -101,7 +101,7 @@ void SensorManager::CreateListOfAvailableSensors()
     // continue with the known sensors to the list
     for (int i = 0; i < iCount; ++i)
     {
-        CComPtr<INuiSensor> pNui;
+        ComSmartPtr<INuiSensor> pNui;
         if( SUCCEEDED( NuiCreateSensorByIndex(i, &pNui) ) )
         {
             const WCHAR* wcPortID = pNui->NuiDeviceConnectionId();  // contains the connections string for the device

@@ -214,7 +214,7 @@ void DataStreamDepth::CopyRawData( _In_ NUI_IMAGE_FRAME *pImageFrame )
 void DataStreamDepth::CopyPixelData( _In_ NUI_IMAGE_FRAME *pImageFrame )
 {
     BOOL nearMode;
-    CComPtr<INuiFrameTexture> pTexture;
+    ComSmartPtr<INuiFrameTexture> pTexture;
 
     // Get the depth image pixel texture
     HRESULT hr = m_pNuiSensor->NuiImageFrameGetDepthImagePixelFrameTexture( m_hStreamHandle, pImageFrame, &nearMode, &pTexture );
