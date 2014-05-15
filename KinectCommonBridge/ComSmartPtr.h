@@ -145,6 +145,29 @@ public:
 		return m_Ptr;
 	}
 
+	// Implementation of CComPtrBase::CopyTo
+	// http://msdn.microsoft.com/ru-ru/library/1wesxec9.aspx
+	// http://msdn.microsoft.com/en-us/library/windows/desktop/aa378137(v=vs.85).aspx
+	HRESULT CopyTo(INTERFACE** lPtr)
+    {
+		assert(lPtr != nullptr);
+
+		if(lPtr == nullptr)
+		{
+			return E_POINTER;
+		}
+
+		if (m_Ptr != lPtr)
+		{
+			lPtr = m_Ptr;
+			m_Ptr->AddRef();
+		} else {
+			return E_POINTER;
+		}
+
+		return S_OK;
+    }
+
 	void Attach(INTERFACE* lPtr)
     {
         if (lPtr)

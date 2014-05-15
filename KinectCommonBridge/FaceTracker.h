@@ -50,10 +50,10 @@ private:
     FT_VECTOR3D m_HeadPoint[NUI_SKELETON_COUNT];
     bool m_SkeletonTracked[NUI_SKELETON_COUNT];
 
-    CComPtr<IFTFaceTracker>		m_pFaceTracker;
-    CComPtr<IFTResult>			m_pFTResult;
-    CComPtr<IFTImage>		    m_pColorImage;
-    CComPtr<IFTImage>			m_pDepthImage;
+    ComSmartPtr<IFTFaceTracker>		m_pFaceTracker;
+    ComSmartPtr<IFTResult>			m_pFTResult;
+    ComSmartPtr<IFTImage>			m_pColorImage;
+    ComSmartPtr<IFTImage>			m_pDepthImage;
 
     FT_CAMERA_CONFIG            m_cameraConfig;
     KinectSensor                *m_pSensor;
