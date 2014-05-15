@@ -227,7 +227,7 @@ HRESULT DataStreamAudio::StartSpeech()
 	// Set up an audio input stream
 	hr = OpenStream();
 
-	CComPtr<IStream> pStream;
+	ComSmartPtr<IStream> pStream;
 	if (SUCCEEDED(hr))
 	{
 		hr = m_pKinectAudioStream->QueryInterface(IID_IStream, (void**) &pStream);
@@ -238,7 +238,9 @@ HRESULT DataStreamAudio::StartSpeech()
 			{
 				m_pSpeechStream.Release();
 			}
-			hr = m_pSpeechStream.CoCreateInstance(CLSID_SpStream);
+
+			//hr = m_pSpeechStream.CoCreateInstance(CLSID_SpStream);
+			hr = CoCreateInstance(CLSID_SpStream, NULL, CLSCTX_INPROC_SERVER, IID_ISpStream, reinterpret_cast<void**>(&m_pSpeechStream));
 
 			if (SUCCEEDED(hr))
 			{
@@ -370,7 +372,7 @@ HRESULT DataStreamAudio::OpenStream()
         // assign the interface to our instance
         m_pNuiAudioSource.Attach(pNuiAudioSource);
 
-        CComPtr<IMediaObject> pDMO;
+        ComSmartPtr<IMediaObject> pDMO;
         hr = m_pNuiAudioSource->QueryInterface(IID_IMediaObject, (void**) &pDMO);
         if (FAILED(hr))
         {
@@ -378,7 +380,7 @@ HRESULT DataStreamAudio::OpenStream()
         }
 
         // Get the property store for the DMO
-        CComPtr<IPropertyStore> pPropertyStore;
+        ComSmartPtr<IPropertyStore> pPropertyStore;
         hr = m_pNuiAudioSource->QueryInterface(IID_IPropertyStore, (void**) &pPropertyStore);
         if (FAILED(hr))
         {
@@ -459,6 +461,7 @@ HRESULT DataStreamAudio::OpenStream()
             goto done;
         }
 
+		//TODO: check if this calls constructor implicitly
         m_pKinectAudioStream = new KinectAudioStream(pDMO);
 	}
 
@@ -604,7 +607,7 @@ HRESULT DataStreamAudio::SetInputVolumeLevel(float fLevelDB)
     HRESULT hr = S_OK;
 
     // create the enumerator for WASAPI
-    CComPtr<IMMDeviceEnumerator> pDeviceEnum;
+    ComSmartPtr<IMMDeviceEnumerator> pDeviceEnum;
     hr = CoCreateInstance(__uuidof(MMDeviceEnumerator), NULL, CLSCTX_INPROC_SERVER, __uuidof(IMMDeviceEnumerator), reinterpret_cast<void**>(&pDeviceEnum));
     if (FAILED(hr))
     {
@@ -612,7 +615,7 @@ HRESULT DataStreamAudio::SetInputVolumeLevel(float fLevelDB)
     }
 
     // get the colloection of capture endpoints
-    CComPtr<IMMDeviceCollection> pCollection;
+    ComSmartPtr<IMMDeviceCollection> pCollection;
     hr = pDeviceEnum->EnumAudioEndpoints(eCapture, DEVICE_STATEMASK_ALL, &pCollection);
     if (FAILED(hr))
     {
@@ -632,8 +635,8 @@ HRESULT DataStreamAudio::SetInputVolumeLevel(float fLevelDB)
     // not expected
     assert(count != 0);
 
-    CComPtr<IMMDevice> pEndpoint;
-    CComPtr<IPropertyStore> pProps;
+    ComSmartPtr<IMMDevice> pEndpoint;
+    ComSmartPtr<IPropertyStore> pProps;
     std::wstring name;
     bool bFound = false;
 
@@ -669,7 +672,7 @@ HRESULT DataStreamAudio::SetInputVolumeLevel(float fLevelDB)
         if (std::string::npos != name.find(L"Kinect"))
         {
 			HRESULT hr = S_OK;
-			CComPtr<IAudioEndpointVolume> pEndptVol;
+			ComSmartPtr<IAudioEndpointVolume> pEndptVol;
 			hr = pEndpoint->Activate(__uuidof(IAudioEndpointVolume), CLSCTX_ALL, NULL, reinterpret_cast<void**>(&pEndptVol) );
 			if( SUCCEEDED(hr) )
 			{
@@ -688,7 +691,7 @@ HRESULT DataStreamAudio::SetInputVolumeLevel(float fLevelDB)
 #ifdef KCB_ENABLE_SPEECH
 HRESULT DataStreamAudio::CreateSpeechRecognizer()
 {
-    CComPtr<ISpObjectToken> pEngineToken;
+    ComSmartPtr<ISpObjectToken> pEngineToken;
 
     HRESULT hr = SpFindBestToken(SPCAT_RECOGNIZERS, GetLanguage(m_sLanguage).c_str(), NULL, &pEngineToken);
     if (SUCCEEDED(hr))
@@ -697,7 +700,8 @@ HRESULT DataStreamAudio::CreateSpeechRecognizer()
 		{
 			m_pSpeechRecognizer.Release();
 		}
-		hr =  m_pSpeechRecognizer.CoCreateInstance(CLSID_SpInprocRecognizer);
+		//hr =  m_pSpeechRecognizer.CoCreateInstance(CLSID_SpInprocRecognizer);
+		hr = CoCreateInstance(CLSID_SpInprocRecognizer, NULL, CLSCTX_INPROC_SERVER, IID_ISpRecognizer, reinterpret_cast<void**>(&m_pSpeechRecognizer));
 	}
 
     if (SUCCEEDED(hr))
