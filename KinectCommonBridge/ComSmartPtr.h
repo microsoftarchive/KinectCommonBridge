@@ -81,7 +81,13 @@ public:
         return m_Ptr;
     }
 
-    INTERFACE& operator*() const
+    INTERFACE& operator*()
+    {
+        assert(m_Ptr != NULL);
+        return *m_Ptr;
+    }
+
+    const INTERFACE& operator*() const
     {
         assert(m_Ptr != NULL);
         return *m_Ptr;
@@ -118,7 +124,13 @@ public:
         {
             return m_Ptr;
         }
-        m_Ptr->Release();
+
+        // Smart pointer might not have been initialized by now
+        if(m_Ptr)
+        {
+            m_Ptr->Release();            
+        }
+
         lPtr->AddRef();
         m_Ptr = lPtr;
         return m_Ptr;
@@ -175,14 +187,42 @@ public:
         }
     }
 
+
+    // Implementation of CComPtrBase::CopyTo
+    // http://msdn.microsoft.com/ru-ru/library/1wesxec9.aspx
+    // http://msdn.microsoft.com/en-us/library/windows/desktop/aa378137(v=vs.85).aspx
+    HRESULT CopyTo(INTERFACE** pplPtr)
+    {
+        assert(pplPtr != nullptr);
+
+        if(pplPtr == nullptr)
+        {
+            return E_POINTER;
+        }
+
+        if (m_Ptr != *pplPtr)
+        {
+            *pplPtr = m_Ptr;
+            m_Ptr->AddRef();
+        } else {
+            return E_POINTER;
+        }
+
+        return S_OK;
+    }
+
     bool IsEqualObject(IUnknown* pOther)
     {
         assert(pOther != NULL);
-        IUnknown* pUnknown = NULL;
-        m_Ptr->QueryInterface(IID_IUnknown, reinterpret_cast<void**>(&pUnknown));
-        bool result = (pOther == pUnknown) ? true : false;
-        pUnknown->Release();
-        return result;
+        if(m_Ptr)
+        {
+            IUnknown* pUnknown = NULL;
+            m_Ptr->QueryInterface(IID_IUnknown, reinterpret_cast<void**>(&pUnknown));
+            bool result = (pOther == pUnknown) ? true : false;
+            pUnknown->Release();
+            return result;
+        }
+        return false;
     }
 
 private:
