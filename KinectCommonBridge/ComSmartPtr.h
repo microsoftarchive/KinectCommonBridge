@@ -59,8 +59,7 @@ public:
 
         if (pIUnknown != NULL)
         {
-            //TODO: reinterpret_cast
-            pIUnknown->QueryInterface(iid, (void**)&m_Ptr);
+            pIUnknown->QueryInterface(iid, reinterpret_cast<void**>(&m_Ptr));
         }
     }
 
@@ -129,8 +128,7 @@ public:
     {
         assert(pIUnknown != NULL);
         assert(piid != NULL);
-        //TODO: reinterpret_cast
-        pIUnknown->QueryInterface(*piid, (void**) &m_Ptr);
+        pIUnknown->QueryInterface(*piid, reinterpret_cast<void**>(&m_Ptr));
         assert(m_Ptr != NULL);
         return m_Ptr;
     }
@@ -181,8 +179,7 @@ public:
     {
         assert(pOther != NULL);
         IUnknown* pUnknown = NULL;
-        //TODO: reinterpret_cast
-        m_Ptr->QueryInterface(IID_IUnknown, (void**) &pUnknown);
+        m_Ptr->QueryInterface(IID_IUnknown, reinterpret_cast<void**>(&pUnknown));
         bool result = (pOther == pUnknown) ? true : false;
         pUnknown->Release();
         return result;
