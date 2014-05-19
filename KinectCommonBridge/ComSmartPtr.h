@@ -205,7 +205,7 @@ public:
             *pplPtr = m_Ptr;
             m_Ptr->AddRef();
         } else {
-            return E_POINTER;
+            return S_OK;
         }
 
         return S_OK;
