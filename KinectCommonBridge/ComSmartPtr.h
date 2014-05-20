@@ -187,6 +187,15 @@ public:
         }
     }
 
+    // Partial implementation of CComPtrBase::CoCreateInstance
+    // http://msdn.microsoft.com/en-us/library/aa263131(v=vs.60).aspx
+    //
+    // rclsid is of form CLSID_CLASS e.g. "CLSID_SpStream". Templated INTERFACE type is an ICLASS derivative from CLASS e.g. "ISpStream".
+    // dwClsContext defaults to CLSCTX_INPROC_SERVER.
+    HRESULT CoCreateInstance(REFCLSID rclsid)
+    {
+        return ::CoCreateInstance(rclsid, NULL, CLSCTX_INPROC_SERVER, __uuidof(INTERFACE), reinterpret_cast<void**>(&m_Ptr));
+    }
 
     // Implementation of CComPtrBase::CopyTo
     // http://msdn.microsoft.com/ru-ru/library/1wesxec9.aspx
@@ -204,8 +213,6 @@ public:
         {
             *pplPtr = m_Ptr;
             m_Ptr->AddRef();
-        } else {
-            return S_OK;
         }
 
         return S_OK;

@@ -239,8 +239,8 @@ HRESULT DataStreamAudio::StartSpeech()
 				m_pSpeechStream.Release();
 			}
 
-			//hr = m_pSpeechStream.CoCreateInstance(CLSID_SpStream);
-			hr = CoCreateInstance(CLSID_SpStream, NULL, CLSCTX_INPROC_SERVER, IID_ISpStream, reinterpret_cast<void**>(&m_pSpeechStream));
+            // same as calling "CoCreateInstance(CLSID_SpStream, NULL, CLSCTX_INPROC_SERVER, IID_ISpStream, reinterpret_cast<void**>(&m_pSpeechStream));"
+			hr = m_pSpeechStream.CoCreateInstance(CLSID_SpStream);
 
 			if (SUCCEEDED(hr))
 			{
@@ -461,7 +461,7 @@ HRESULT DataStreamAudio::OpenStream()
             goto done;
         }
 
-		//TODO: check if this calls constructor implicitly
+        // this calls ComSmartPtr::operator=(KinectAudioStream*)
         m_pKinectAudioStream = new KinectAudioStream(pDMO);
 	}
 
@@ -608,7 +608,8 @@ HRESULT DataStreamAudio::SetInputVolumeLevel(float fLevelDB)
 
     // create the enumerator for WASAPI
     ComSmartPtr<IMMDeviceEnumerator> pDeviceEnum;
-    hr = CoCreateInstance(__uuidof(MMDeviceEnumerator), NULL, CLSCTX_INPROC_SERVER, __uuidof(IMMDeviceEnumerator), reinterpret_cast<void**>(&pDeviceEnum));
+    // same as calling "CoCreateInstance(__uuidof(MMDeviceEnumerator), NULL, CLSCTX_INPROC_SERVER, __uuidof(IMMDeviceEnumerator), reinterpret_cast<void**>(&pDeviceEnum));"
+    hr = pDeviceEnum.CoCreateInstance(__uuidof(MMDeviceEnumerator));
     if (FAILED(hr))
     {
         return hr;
@@ -700,8 +701,8 @@ HRESULT DataStreamAudio::CreateSpeechRecognizer()
 		{
 			m_pSpeechRecognizer.Release();
 		}
-		//hr =  m_pSpeechRecognizer.CoCreateInstance(CLSID_SpInprocRecognizer);
-		hr = CoCreateInstance(CLSID_SpInprocRecognizer, NULL, CLSCTX_INPROC_SERVER, IID_ISpRecognizer, reinterpret_cast<void**>(&m_pSpeechRecognizer));
+        // same as calling "CoCreateInstance(CLSID_SpInprocRecognizer, NULL, CLSCTX_INPROC_SERVER, IID_ISpRecognizer, reinterpret_cast<void**>(&m_pSpeechRecognizer));"
+		hr =  m_pSpeechRecognizer.CoCreateInstance(CLSID_SpInprocRecognizer);
 	}
 
     if (SUCCEEDED(hr))
