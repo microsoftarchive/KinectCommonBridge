@@ -22,18 +22,18 @@ See the Apache 2 License for the specific language governing permissions and lim
 #include <unknwn.h>
 #include <assert.h>
 
-template<class INTERFACE, const IID* piid = NULL>
+template<class INTERFACE, const IID* piid = nullptr>
 class ComSmartPtr
 {
 public:
-    ComSmartPtr() { m_Ptr = NULL; }
+    ComSmartPtr() { m_Ptr = nullptr; }
 
-    //TODO: try 'explicit'
+    // Apart from its original role this is used as conversion constructor for nullptr.
     ComSmartPtr(INTERFACE* lPtr)
     {
-        m_Ptr = NULL;
+        m_Ptr = nullptr;
 
-        if (lPtr != NULL)
+        if (lPtr != nullptr)
         {
             m_Ptr = lPtr;
             m_Ptr->AddRef();
@@ -42,7 +42,7 @@ public:
 
     ComSmartPtr(const ComSmartPtr<INTERFACE, piid>& refComPtr)
     {
-        m_Ptr = NULL;
+        m_Ptr = nullptr;
 
         // using static cast here since conversion operator is explicitly defined
         m_Ptr = static_cast<INTERFACE*>(refComPtr);
@@ -55,9 +55,9 @@ public:
 
     ComSmartPtr(IUnknown* pIUnknown, IID iid)
     {
-        m_Ptr = NULL;
+        m_Ptr = nullptr;
 
-        if (pIUnknown != NULL)
+        if (pIUnknown != nullptr)
         {
             pIUnknown->QueryInterface(iid, reinterpret_cast<void**>(&m_Ptr));
         }
@@ -68,7 +68,7 @@ public:
         if (m_Ptr)
         {
             m_Ptr->Release();
-            m_Ptr = NULL;
+            m_Ptr = nullptr;
         }
     }
 
@@ -83,43 +83,43 @@ public:
 
     INTERFACE& operator*()
     {
-        assert(m_Ptr != NULL);
+        assert(m_Ptr != nullptr);
         return *m_Ptr;
     }
 
     const INTERFACE& operator*() const
     {
-        assert(m_Ptr != NULL);
+        assert(m_Ptr != nullptr);
         return *m_Ptr;
     }
 
     INTERFACE** operator&()
     {
-        //assert(m_Ptr != NULL);
+        //assert(m_Ptr != nullptr);
         return &m_Ptr;
     }
 
     INTERFACE* operator->() const
     {
-        assert(m_Ptr != NULL);
+        assert(m_Ptr != nullptr);
         return m_Ptr;
     }
 
     bool operator==(const INTERFACE& lPtr) const
     {
-        assert(m_Ptr != NULL);
+        assert(m_Ptr != nullptr);
         return m_Ptr == lPtr;
     }
 
     bool operator!=(const INTERFACE& lPtr) const
     {
-        assert(m_Ptr != NULL);
+        assert(m_Ptr != nullptr);
         return !(m_Ptr == lPtr);
     }
 
     INTERFACE* operator=(INTERFACE* lPtr)
     {
-        assert(lPtr != NULL);
+        assert(lPtr != nullptr);
         if (IsEqualObject(lPtr))
         {
             return m_Ptr;
@@ -138,16 +138,16 @@ public:
 
     INTERFACE* operator=(IUnknown* pIUnknown)
     {
-        assert(pIUnknown != NULL);
-        assert(piid != NULL);
+        assert(pIUnknown != nullptr);
+        assert(piid != nullptr);
         pIUnknown->QueryInterface(*piid, reinterpret_cast<void**>(&m_Ptr));
-        assert(m_Ptr != NULL);
+        assert(m_Ptr != nullptr);
         return m_Ptr;
     }
 
     INTERFACE* operator=(const ComSmartPtr<INTERFACE, piid>& RefComPtr)
     {
-        assert(&RefComPtr != NULL);
+        assert(&RefComPtr != nullptr);
         // using static cast here since conversion operator is explicitly defined
         m_Ptr = static_cast<INTERFACE*>(RefComPtr);
 
@@ -165,7 +165,7 @@ public:
             if (m_Ptr)
             {
                 m_Ptr->Release();
-                m_Ptr = NULL;
+                m_Ptr = nullptr;
             }
             m_Ptr = lPtr;
         }
@@ -174,7 +174,7 @@ public:
     INTERFACE* Detach()
     {
         INTERFACE* lPtr = m_Ptr;
-        m_Ptr = NULL;
+        m_Ptr = nullptr;
         return lPtr;
     }
 
@@ -183,7 +183,7 @@ public:
         if (m_Ptr)
         {
             m_Ptr->Release();
-            m_Ptr = NULL;
+            m_Ptr = nullptr;
         }
     }
 
@@ -220,10 +220,10 @@ public:
 
     bool IsEqualObject(IUnknown* pOther)
     {
-        assert(pOther != NULL);
+        assert(pOther != nullptr);
         if(m_Ptr)
         {
-            IUnknown* pUnknown = NULL;
+            IUnknown* pUnknown = nullptr;
             m_Ptr->QueryInterface(IID_IUnknown, reinterpret_cast<void**>(&pUnknown));
             bool result = (pOther == pUnknown) ? true : false;
             pUnknown->Release();
