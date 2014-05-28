@@ -29,9 +29,13 @@ echo. * Building libraries...
 echo. */
 echo.
 
+
 call %VSVARS%
 
 if %FOUND_VC%==1 (
+
+	devenv "KinectCommonBridge.sln" /upgrade
+
     msbuild KinectCommonBridge.sln /p:Configuration="Debug" /p:Platform="Win32" /t:Clean,Build
     msbuild KinectCommonBridge.sln /p:Configuration="Release" /p:Platform="Win32" /t:Clean,Build
     msbuild KinectCommonBridge.sln /p:Configuration="Debug" /p:Platform="x64" /t:Clean,Build
