@@ -71,16 +71,16 @@ private:
 
 private:
     // Audio variables and interfaces
-    AEC_SYSTEM_MODE		m_eAECSystemMode;
-	bool				m_bOverrideFeatureMode;
-	LONG				m_lAES;
-	bool				m_bGainBounder;
-    CComPtr<INuiAudioBeam>      m_pNuiAudioSource;
+    AEC_SYSTEM_MODE					m_eAECSystemMode;
+	bool							m_bOverrideFeatureMode;
+	LONG							m_lAES;
+	bool							m_bGainBounder;
+    ComSmartPtr<INuiAudioBeam>      m_pNuiAudioSource;
 
-    CComPtr<IMediaBuffer>       m_pOutputBuffer;
-    LONGLONG                    m_llLastTimeStamp;
+    ComSmartPtr<IMediaBuffer>       m_pOutputBuffer;
+    LONGLONG						m_llLastTimeStamp;
 
-    CComPtr<KinectAudioStream>  m_pKinectAudioStream;
+    ComSmartPtr<KinectAudioStream>  m_pKinectAudioStream;
 
     // Speech variables and interfaces
 #ifdef KCB_ENABLE_SPEECH
@@ -89,9 +89,9 @@ private:
     short                       m_sLanguage;
     ULONGLONG                   m_ullEventInterest;
 
-    CComPtr<ISpStream>          m_pSpeechStream;
-    CComPtr<ISpRecognizer>      m_pSpeechRecognizer;
-    CComPtr<ISpRecoContext>     m_pSpeechContext;
-    CComPtr<ISpRecoGrammar>     m_pSpeechGrammar;
+    ComSmartPtr<ISpStream>          m_pSpeechStream;
+    ComSmartPtr<ISpRecognizer>      m_pSpeechRecognizer;
+    ComSmartPtr<ISpRecoContext>     m_pSpeechContext;
+    ComSmartPtr<ISpRecoGrammar>     m_pSpeechGrammar;
 #endif
 };

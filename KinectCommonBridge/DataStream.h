@@ -68,8 +68,8 @@ protected:
 
 
 protected:
-    CriticalSection         m_nuiLock;
-    CComPtr<INuiSensor>     m_pNuiSensor;
+    CriticalSection				m_nuiLock;
+    ComSmartPtr<INuiSensor>     m_pNuiSensor;
 
     HANDLE          m_hStreamHandle;
     HANDLE          m_hFrameReadyEvent;

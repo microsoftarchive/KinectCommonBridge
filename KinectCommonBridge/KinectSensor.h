@@ -159,7 +159,7 @@ private:
 private:
     CriticalSection     m_nuiLock;
     std::wstring        m_wsPortID;
-    CComPtr<INuiSensor> m_pNuiSensor;
+    ComSmartPtr<INuiSensor> m_pNuiSensor;
 
     bool    m_bSelected;
     bool    m_bInitialized;

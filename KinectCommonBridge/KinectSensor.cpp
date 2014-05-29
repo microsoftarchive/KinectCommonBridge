@@ -226,7 +226,7 @@ HRESULT KinectSensor::CreateNuiDevice()
     assert(0 != m_wsPortID.size());
 
     // check if we can use it
-    CComPtr<INuiSensor> pNuiSensor;
+    ComSmartPtr<INuiSensor> pNuiSensor;
     HRESULT hr = NuiCreateSensorById(m_wsPortID.c_str(), &pNuiSensor);
     if (FAILED(hr))
     {
@@ -247,7 +247,7 @@ HRESULT KinectSensor::CreateNuiDevice()
         // start clean
         ResetDevice();
 
-        m_pNuiSensor = pNuiSensor; // auto refcount with CComPtr
+        m_pNuiSensor = pNuiSensor; // auto refcount with ComSmartPtr
 
         if (nullptr == m_pCoordinateMapper)
         {
