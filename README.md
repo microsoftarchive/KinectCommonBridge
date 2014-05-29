@@ -28,7 +28,7 @@ The Hardware and Software below are required to build the library:
 	A Kinect for Windows Sensor is required to capture sound and image that will be used by the Kinect Common Bridge on top of the Kinect for Windows SDK. You can find info about the Kinect For Windows sensor on [http://www.microsoft.com/en-us/kinectforwindows/Purchase/Overview.aspx](http://www.microsoft.com/en-us/kinectforwindows/Purchase/Overview.aspx)
 
 - **Visual Studio**:
-	The library builds with Visual Studio versions 2010 and 2012 Express and above. You find download links on this page: [http://www.microsoft.com/en-us/kinectforwindowsdev/Downloads.aspx](http://www.microsoft.com/en-us/kinectforwindowsdev/Downloads.aspx)
+	The library builds with Visual Studio versions 2010 and 2012 Express and above. Note that since ATL is not part of Visual Studio Express and Speech API depends on it you'll not be able to build SAPI related demos with VS Express. You can find download links on this page: [http://www.microsoft.com/en-us/kinectforwindowsdev/Downloads.aspx](http://www.microsoft.com/en-us/kinectforwindowsdev/Downloads.aspx)
 	
 - **Kinect for Windows SDK**:
 	In order to build this library, you first need to download the Kinect for Windows SDK from [http://www.microsoft.com/en-us/kinectforwindowsdev/Downloads.aspx](http://www.microsoft.com/en-us/kinectforwindowsdev/Downloads.aspx). You can also find more information on the system requirements to install and use the Kinect SDK on this page: [http://msdn.microsoft.com/en-us/library/hh855359.aspx](http://msdn.microsoft.com/en-us/library/hh855359.aspx)
@@ -78,6 +78,8 @@ KCB builds with both face tracking and voice recognition enabled. To disable the
 
 	KCB_ENABLE_FT
 	KCB_ENABLE_SPEECH
+
+Note that you'd also want to disable voice recognition if you use VS Express since it is not bundled with ATL which is a dependency when using Speech API.
 
 To enable face tracking and voice recognition in your own project, you will need to add the following preprocessor defines to your project's  C++ preprocessor properties:
 
