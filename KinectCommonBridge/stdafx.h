@@ -26,8 +26,11 @@ See the Apache 2 License for the specific language governing permissions and lim
 //       SDK), VC++ include and library paths should be configured to list appropriate paths within Microsoft
 //       Speech SDK installation directory before listing the default system include and library directories,
 //       which might contain a version of SAPI that is not appropriate for use together with Kinect sensor.
+#ifdef KCB_ENABLE_SPEECH
 #include <sapi.h>
 #include <sphelper.h>
+#endif
+
 
 #include "ComSmartPtr.h"
 //#include <atlbase.h>
