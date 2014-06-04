@@ -29,6 +29,8 @@ See the Apache 2 License for the specific language governing permissions and lim
 #include <mmreg.h>              // WAVEFORMATEX
 #include <wmcodecdsp.h>			// AEC_SYSTEM_MODE
 
+#include "ComSmartPtr.h"        // Smart pointer instead of ATL dependent CComPtr
+
 #ifdef KCB_ENABLE_FT
 #include <FaceTrackLib.h>
 #endif

@@ -36,7 +36,7 @@
 /// </summary>
 KinectAudioStream::KinectAudioStream(IMediaObject *pKinectDmo) 
     : m_cRef(1)
-    , m_pKinectDmo(pKinectDmo) // assigment for CComPtr AddRefs
+    , m_pKinectDmo(pKinectDmo) // assigment for CComPtr-like AddRefs
     , m_CurrentWriteBuffer(NULL)
     , m_CurrentReadBuffer(NULL)
     , m_CurrentReadBufferIndex(0)

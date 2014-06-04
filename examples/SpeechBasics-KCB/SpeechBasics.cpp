@@ -18,7 +18,8 @@ LPCWSTR CSpeechBasics::GrammarFileName = L"SpeechBasics-D2D.grxml";
 // This is the class ID we expect for the Microsoft Speech recognizer.
 // Other values indicate that we're using a version of sapi.h that is
 // incompatible with this sample.
-DEFINE_GUID(CLSID_ExpectedRecognizer, 0x495648e7, 0xf7ab, 0x4267, 0x8e, 0x0f, 0xca, 0xfb, 0x7a, 0x33, 0xc1, 0x60);
+// NOTE: This is for reference here. It is already defined in "stdafx.h"
+//DEFINE_GUID(CLSID_ExpectedRecognizer, 0x495648e7, 0xf7ab, 0x4267, 0x8e, 0x0f, 0xca, 0xfb, 0x7a, 0x33, 0xc1, 0x60);
 
 /// <summary>
 /// Entry point for the application

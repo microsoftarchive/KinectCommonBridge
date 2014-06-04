@@ -101,10 +101,13 @@ void SensorManager::CreateListOfAvailableSensors()
     // continue with the known sensors to the list
     for (int i = 0; i < iCount; ++i)
     {
-        CComPtr<INuiSensor> pNui;
+        INuiSensor* pNui = nullptr;
+        ComSmartPtr<INuiSensor> pNuiPtr;
         if( SUCCEEDED( NuiCreateSensorByIndex(i, &pNui) ) )
         {
-            const WCHAR* wcPortID = pNui->NuiDeviceConnectionId();  // contains the connections string for the device
+            pNuiPtr.Attach(pNui); // Setting up smart pointer for sensor.
+
+            const WCHAR* wcPortID = pNuiPtr->NuiDeviceConnectionId();  // contains the connections string for the device
                                                                     // plugged into a specific USB port. 
                                                                     // removing the sensor and using a different port will have
                                                                     // a different ID.
