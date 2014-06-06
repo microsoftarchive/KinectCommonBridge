@@ -122,7 +122,7 @@ void DataStreamSkeleton::SetChooserMode( KINECT_SKELETON_SELECTION_MODE mode )
     }
 }
 
-HRESULT DataStreamSkeleton::StartStream()
+HRESULT DataStreamSkeleton::StartStream(bool bPaused)
 {
     AutoLock lock(m_nuiLock);
 
@@ -133,15 +133,17 @@ HRESULT DataStreamSkeleton::StartStream()
         return E_NUI_STREAM_NOT_ENABLED;
     }
 
-    if( m_started && !m_paused )
+    if( m_started && !m_paused && !bPaused)
     {
         return S_OK;
     }
 
     if( HasSkeletalEngine(m_pNuiSensor) )
     {
-        if( m_paused ) 
+        if( bPaused ) 
         {
+            m_paused = bPaused;
+
             // Disable tracking skeleton
             return m_pNuiSensor->NuiSkeletonTrackingDisable();
         }
@@ -157,6 +159,7 @@ HRESULT DataStreamSkeleton::StartStream()
 
             if( SUCCEEDED(hr) )
             {
+                m_paused = false;
                 m_started = true;
             }
 
@@ -167,6 +170,13 @@ HRESULT DataStreamSkeleton::StartStream()
     m_started = false;
 
     return E_NUI_STREAM_NOT_ENABLED;
+}
+
+HRESULT DataStreamSkeleton::StartStream()
+{
+    AutoLock lock(m_nuiLock);
+
+    return StartStream(m_paused);
 }
 
 void DataStreamSkeleton::StopStream()
@@ -180,9 +190,7 @@ void DataStreamSkeleton::PauseStream(bool bPaused)
 {
     AutoLock lock(m_nuiLock);
 
-    m_paused = bPaused;
-
-    StartStream();
+    StartStream(bPaused);
 }
 
 HRESULT DataStreamSkeleton::GetFrameData( _Inout_ NUI_SKELETON_FRAME& pSkeletonFrame )

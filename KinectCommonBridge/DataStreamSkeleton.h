@@ -35,6 +35,12 @@ protected:
     virtual void CopyData(_In_ void* pImageFrame);
 
 private:
+    /// <summary>
+    /// Internal implementation of 'start stream' logic to handle pausing and resuming the stream
+    /// <summary>
+    /// <param name="bPaused">Desired state of the stream</param>
+    HRESULT StartStream(bool bPaused);
+
     // compare the skeleton smooth params
     static bool IsEqual( NUI_TRANSFORM_SMOOTH_PARAMETERS& param1, NUI_TRANSFORM_SMOOTH_PARAMETERS& param2 );
 
