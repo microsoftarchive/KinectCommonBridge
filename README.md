@@ -36,4 +36,4 @@ Coming soon!!
 
 * KCB for Open Frameworks developers
 
-	[https://github.com/joshuajnoble/ofxKinectCommonBridge](https://github.com/joshuajnoble/ofxKinectCommonBridge)9999
+	[https://github.com/joshuajnoble/ofxKinectCommonBridge](https://github.com/joshuajnoble/ofxKinectCommonBridge)
