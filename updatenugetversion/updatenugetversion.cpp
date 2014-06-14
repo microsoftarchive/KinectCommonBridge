@@ -1,9 +1,14 @@
-// updatenugetversion.cpp : Defines the entry point for the console application.
-//
+// Update Nuget Version
+// This command line exe program will create a new file called (filename)2. A batch file can be used to copy or delete the original.
+// Authors - Microsoft, Neil McLaughlin
+// Created June 13, 2014
 
 #include <stdio.h>
 #include <tchar.h>
 #include <string.h>
+
+#define KEYSTRa "version :"
+#define KEYSTRb "version:"
 
 // Prototype
 int ParseFile(char *szFilename, int nRank = 3);
@@ -16,7 +21,7 @@ int ParseFile(char *szFilename, int nRank)
 {
 	int nRet = -1;
 
-	const int MAX = 1000;
+	const int MAX = FILENAME_MAX;
 	char szStr[MAX] = "";
 
 	char szFilename2[MAX];
@@ -37,7 +42,7 @@ int ParseFile(char *szFilename, int nRank)
 			{
 				c = fgets(szStr, MAX, fp);
 
-				if (strstr(szStr, "version :") || strstr(szStr, "version:"))
+				if (strstr(szStr, KEYSTRa) || strstr(szStr, KEYSTRb))
 				{
 					int v[4] = { -1, -1, -1, -1 };
 
