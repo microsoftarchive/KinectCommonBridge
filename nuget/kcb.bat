@@ -5,8 +5,8 @@ git checkout nuget
 call nuget\buildkcb2012
 call nuget\buildkcb2013
 call nuget\cdnuget
+call updateversion kcb.autopkg
 call powershell -command "Write-NuGetPackage kcb.autopkg"
-call updateversion
 ..\..\nuget push *.nupkg
 
 
