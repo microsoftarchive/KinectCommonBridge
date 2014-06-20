@@ -84,9 +84,6 @@ int ParseFile(char *szFilename, int nRank)
 		}
 
 		fclose(fp);
-
-		printf("Created file %s2.\n", szFilename, szFilename);
-
 	}
 	else
 		printf("ERROR - Could not find file: %s.\n", szFilename);
