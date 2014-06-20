@@ -4,9 +4,9 @@ cd KinectCommonBridge
 git checkout nuget
 call nuget\buildkcb2012
 call nuget\buildkcb2013
-call powershell -command "Write-NuGetPackage nuget\kcb.autopkg"
-call powershell -command "Write-NuGetPackage nuget\kcbx64.autopkg"
-call nuget\updateversion
+call nuget\cdnuget
+call powershell -command "Write-NuGetPackage kcb.autopkg"
+call updateversion
 ..\..\nuget push *.nupkg
 
 
