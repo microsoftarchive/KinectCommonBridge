@@ -47,6 +47,7 @@ int ParseFile(char *szFilename, int nRank)
 					int v[4] = { -1, -1, -1, -1 };
 
 					sscanf_s(szStr, "\t\tversion : %d.%d.%d.%d;\n", &v[0], &v[1], &v[2], &v[3]);
+					printf("Converted version %d.%d.%d.%d ", v[0], v[1], v[2], v[3]);
 
 					bool bDone = false;
 
@@ -65,6 +66,7 @@ int ParseFile(char *szFilename, int nRank)
 					} while (!bDone && nRank > -1);
 
 					fprintf_s(fp2, "\t\tversion : %d.%d.%d.%d;\n", v[0], v[1], v[2], v[3]);
+					printf("to version %d.%d.%d.%d.\n", v[0], v[1], v[2], v[3]);
 
 					nRet = nRank;
 				}
@@ -75,14 +77,19 @@ int ParseFile(char *szFilename, int nRank)
 						fputs(szStr, fp2);
 					}
 				}
-				
+
 			} while (c);
-							
+
 			fclose(fp2);
 		}
 
 		fclose(fp);
+
+		printf("Created file %s2.\n", szFilename, szFilename);
+
 	}
+	else
+		printf("ERROR - Could not find file: %s.\n", szFilename);
 
 	return nRet;
 }
