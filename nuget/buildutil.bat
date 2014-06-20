@@ -35,7 +35,7 @@ call %VSVARS%
 if %FOUND_VC%==1 (
 
 
-    msbuild ./updatenugetversion/updatenugetversion.sln /p:Configuration="Release" /p:Platform="Win32" /t:Clean,Build
+    msbuild ../updatenugetversion/updatenugetversion.sln /p:Configuration="Release" /p:Platform="Win32" /t:Clean,Build
  
 ) else (
     echo Script error.

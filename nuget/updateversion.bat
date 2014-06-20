@@ -1,2 +1,4 @@
-call .\nuget\buildutil
-call .\nuget\runutil %1
+cd nuget
+call buildutil
+call runutil %1
+
