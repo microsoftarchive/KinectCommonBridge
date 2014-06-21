@@ -7,7 +7,8 @@ call nuget\buildkcb2013
 call nuget\cdnuget
 call updateversion kcb.autopkg
 call powershell -command "Write-NuGetPackage kcb.autopkg"
-..\..\nuget push *.nupkg
+call powershell -command "Write-NuGetPackage kcbx64.autopkg"
+call nugetpublish
 
 
 
