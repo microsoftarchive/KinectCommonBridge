@@ -33,8 +33,8 @@ nuget {
 		// the folder that contains all the .h files will 
 		// automatically get added to the Includes path.
  
- 	 	//include: { ".\OutDir\include\**\*";	};					
- 	 	bin: { ".\OutDir\x64\**\*";	};					
+ 	 	//include: { "..\OutDir\include\**\*";	};					
+ 	 	bin: { "..\OutDir\x64\**\*";	};					
  		
 	};
 
