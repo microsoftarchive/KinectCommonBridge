@@ -1,7 +1,7 @@
 nuget {
 	nuspec {
 		id = KinectCommonBridge;
-		version : 0.0.1.1;
+		version : 0.0.1.2;
 		title: Kinect Common Bridge;
 		authors: {Microsoft Corporation};
 		owners: {Microsoft Corporation};
