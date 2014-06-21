@@ -47,7 +47,7 @@ int ParseFile(char *szFilename, int nRank)
 					int v[4] = { -1, -1, -1, -1 };
 
 					sscanf_s(szStr, "\t\tversion : %d.%d.%d.%d;\n", &v[0], &v[1], &v[2], &v[3]);
-					printf("Converted version %d.%d.%d.%d ", v[0], v[1], v[2], v[3]);
+					printf("Converted %s version %d.%d.%d.%d ", szFilename, v[0], v[1], v[2], v[3]);
 
 					bool bDone = false;
 
