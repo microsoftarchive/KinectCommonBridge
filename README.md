@@ -62,7 +62,7 @@ The process to submit a new sample is actually fairly simple: fork, sign CLA, pu
  16. Fusion Explorer
  17. Twitch-based Game Experience
 
-You can see that will be a great start. Yet we are eager to see what comes out of this community in terms of contributions, comments and creativity   
+You can see that will be a great start. Yet we are eager to see what comes out of this community in terms of contribution, comments and creativity.
 
 ###An Added Incentive###
 And if inventing new ways to take advantage of the new Kinect for Windows is not enough, we can help you prove to your friends and family that at least some of your “playtime” time on the computer is productive. We’ll contact you after the contribution is accepted and you'll be able to earn a coveted “Kinect certified contributor ” t-shirt .
