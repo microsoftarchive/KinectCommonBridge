@@ -62,7 +62,15 @@ The process to submit a new sample is actually fairly simple: fork, sign CLA, pu
  16. Fusion Explorer
  17. Twitch-based Game Experience
 
-You can see that will be a great start. Yet we are eager to see what comes out of this community in terms of contribution, comments and creativity.
+You can see that will be a great start. Yet we are eager to see what comes out of this community in terms of contribution, comments and creativity :)
+
+Some ideas for samples that might be interesting are:
+
+ - Exercise recognition – ask the user to move in a particular way and determine if the user actually did that. This can be useful in a home exercise app.
+ - Adaptive UI – show how a UI can change based on distance from the sensor.  For example, at 10 ft away, the UI shows a couple of large buttons to interact with.  As the user moves closer, the UI changes to show content and support interactions that are more granular.  The Adaptive UI sample in K4W v1.8 is a good starting point.
+ - Multi-user Engagement – build an app that shows how to handle multiple bodies being detected, such that each can interact with the app without the app confusing them
+ - Real-world Object Interaction (hotspot detection) – show how to use Kinect for Windows to detect when one object gets closer to another object in the real world.
+ - ….
 
 ###An Added Incentive###
 And if inventing new ways to take advantage of the new Kinect for Windows is not enough, we can help you prove to your friends and family that at least some of your “playtime” time on the computer is productive. We’ll contact you after the contribution is accepted and you'll be able to earn a coveted “Kinect certified contributor ” t-shirt .
