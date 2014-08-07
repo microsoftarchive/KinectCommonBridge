@@ -20,13 +20,13 @@ Kinect Common Bridge 2.0
 The Hardware and Software below are required to build the library:
 
 - A **Kinect for Windows V2 sensor**:
-	A Kinect for Windows V2 Sensor is required to capture sound and images that will be used by the Kinect Common Bridge 2.0 on top of the Kinect for Windows SDK. You can find info about the Kinect For Windows sensor on [http://www.microsoft.com/en-us/kinectforwindows/Purchase/developer-sku.aspx](http://www.microsoft.com/en-us/kinectforwindows/Purchase/developer-sku.aspx)
+	A Kinect for Windows V2 Sensor is required to capture sound and images that will be used by the Kinect Common Bridge 2.0 on top of the Kinect for Windows SDK. You can either [order it online](http://www.microsoft.com/en-us/kinectforwindows/) or purchase it at a Microsoft Store.
 
 - **Visual Studio**:
-	The library builds with Visual Studio versions 2012 Express and above. 
+	The library builds with [Visual Studio](http://www.visualstudio.com/) versions 2012 Express and above. 
 	
 - **Kinect for Windows SDK**:
-	In order to build this library, you first need to download the Kinect for Windows SDK V2 (download link coming soon). 
+	In order to build this library, you first need to download the SDK from the [Kinect for Windows Developer site](http://www.microsoft.com/en-us/kinectforwindows/develop/). 
 
 ## Troubleshooting
 
