@@ -113,6 +113,8 @@ KINECT_CB HRESULT APIENTRY KCBCreateColorFrame(ColorImageFormat colorFormat, KCB
     pFrame->Size = frameDescription.lengthInPixels * frameDescription.bytesPerPixel;
     pFrame->Buffer = new (std::nothrow) BYTE[pFrame->Size];
 
+	*ppColorFrame = pFrame;
+
     return S_OK;
 }
 
