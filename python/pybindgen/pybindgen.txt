@@ -1,0 +1,166 @@
+#if PY_VERSION_HEX >= 0x03000000
+typedef void* cmpfunc;
+#define PyCObject_FromVoidPtr(a, b) PyCapsule_New(a, NULL, b)
+#define PyCObject_AsVoidPtr(a) PyCapsule_GetPointer(a, NULL)
+#define PyString_FromString(a) PyBytes_FromString(a)
+#define Py_TPFLAGS_CHECKTYPES 0 /* this flag doesn't exist in python 3 */
+#endif
+
+
+#if     __GNUC__ > 2
+# define PYBINDGEN_UNUSED(param) param __attribute__((__unused__))
+#elif     __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ > 4)
+# define PYBINDGEN_UNUSED(param) __attribute__((__unused__)) param
+#else
+# define PYBINDGEN_UNUSED(param) param
+#endif  /* !__GNUC__ */
+
+#ifndef _PyBindGenWrapperFlags_defined_
+#define _PyBindGenWrapperFlags_defined_
+typedef enum _PyBindGenWrapperFlags {
+   PYBINDGEN_WRAPPER_FLAG_NONE = 0,
+   PYBINDGEN_WRAPPER_FLAG_OBJECT_NOT_OWNED = (1<<0),
+} PyBindGenWrapperFlags;
+#endif
+
+
+#include "KCBv2Lib.h"
+/* --- module functions --- */
+PyObject *_wrap_KCB_KCBOpenDefaultSensor__0(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs, PyObject **return_exception)
+{
+    PyObject *py_retval;
+    int retval;
+    const char *keywords[] = {NULL};
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, (char *) "", (char **) keywords)) {
+        {
+            PyObject *exc_type, *traceback;
+            PyErr_Fetch(&exc_type, return_exception, &traceback);
+            Py_XDECREF(exc_type);
+            Py_XDECREF(traceback);
+        }
+        return NULL;
+    }
+    retval = KCBOpenDefaultSensor();
+    py_retval = Py_BuildValue((char *) "i", retval);
+    return py_retval;
+}
+
+PyObject *_wrap_KCB_KCBOpenDefaultSensor__1(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *
+args, PyObject *kwargs, PyObject **return_exception)
+{
+    PyObject *py_retval;
+    int retval;
+    const char *keywords[] = {NULL};
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, (char *) "", (char **) keywords)) {
+        {
+            PyObject *exc_type, *traceback;
+            PyErr_Fetch(&exc_type, return_exception, &traceback);
+            Py_XDECREF(exc_type);
+            Py_XDECREF(traceback);
+        }
+        return NULL;
+    }
+    retval = KCBOpenDefaultSensor();
+    py_retval = Py_BuildValue((char *) "i", retval);
+    return py_retval;
+}
+
+PyObject *_wrap_KCB_KCBOpenDefaultSensor__2(PyObject * PYBINDGEN_UNUSED(dummy), PyObject *args, PyObject *kwargs, PyObject **return_exception)
+{
+    PyObject *py_retval;
+    int retval;
+    const char *keywords[] = {NULL};
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, (char *) "", (char **) keywords)) {
+        {
+            PyObject *exc_type, *traceback;
+            PyErr_Fetch(&exc_type, return_exception, &traceback);
+            Py_XDECREF(exc_type);
+            Py_XDECREF(traceback);
+        }
+        return NULL;
+    }
+    retval = KCBOpenDefaultSensor();
+    py_retval = Py_BuildValue((char *) "i", retval);
+    return py_retval;
+}
+
+PyObject *_wrap_KCB_KCBOpenDefaultSensor(PyObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyObject * retval;
+    PyObject *error_list;
+    PyObject *exceptions[3] = {0,};
+    retval = _wrap_KCB_KCBOpenDefaultSensor__0(self, args, kwargs, &exceptions[0]);
+    if (!exceptions[0]) {
+        return retval;
+    }
+    retval = _wrap_KCB_KCBOpenDefaultSensor__1(self, args, kwargs, &exceptions[1]);
+    if (!exceptions[1]) {
+        Py_DECREF(exceptions[0]);
+        return retval;
+    }
+    retval = _wrap_KCB_KCBOpenDefaultSensor__2(self, args, kwargs, &exceptions[2]);
+    if (!exceptions[2]) {
+        Py_DECREF(exceptions[0]);
+        Py_DECREF(exceptions[1]);
+        return retval;
+    }
+    error_list = PyList_New(3);
+    PyList_SET_ITEM(error_list, 0, PyObject_Str(exceptions[0]));
+    Py_DECREF(exceptions[0]);
+    PyList_SET_ITEM(error_list, 1, PyObject_Str(exceptions[1]));
+    Py_DECREF(exceptions[1]);
+    PyList_SET_ITEM(error_list, 2, PyObject_Str(exceptions[2]));
+    Py_DECREF(exceptions[2]);
+    PyErr_SetObject(PyExc_TypeError, error_list);
+    Py_DECREF(error_list);
+    return NULL;
+}
+PyObject * _wrap_KCB_KCBOpenDefaultSensor(PyObject *self, PyObject *args, PyObject *kwargs);
+
+static PyMethodDef KCB_functions[] = {
+    {(char *) "KCBOpenDefaultSensor", (PyCFunction) _wrap_KCB_KCBOpenDefaultSensor, METH_VARARGS|METH_KEYWORDS, NULL }, {NULL, NULL, 0, NULL}
+};
+#if PY_VERSION_HEX >= 0x03000000
+static struct PyModuleDef KCB_moduledef = {
+    PyModuleDef_HEAD_INIT,
+    "KCB",
+    NULL,
+    -1,
+    KCB_functions,
+};
+#endif
+
+
+#if PY_VERSION_HEX >= 0x03000000
+    #define MOD_ERROR NULL
+    #define MOD_INIT(name) PyObject* PyInit_##name(void)
+    #define MOD_RETURN(val) val
+#else
+    #define MOD_ERROR
+    #define MOD_INIT(name) void init##name(void)
+    #define MOD_RETURN(val)
+#endif
+#if defined(__cplusplus)
+extern "C"
+#endif
+#if defined(__GNUC__) && __GNUC__ >= 4
+__attribute__ ((visibility("default")))
+#endif
+
+
+MOD_INIT(KCB)
+{
+    PyObject *m;
+    #if PY_VERSION_HEX >= 0x03000000
+    m = PyModule_Create(&KCB_moduledef);
+    #else
+    m = Py_InitModule3((char *) "KCB", KCB_functions, NULL);
+    #endif
+    if (m == NULL) {
+        return MOD_ERROR;
+    }
+    return MOD_RETURN(m);
+}

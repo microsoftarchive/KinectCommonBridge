@@ -1,0 +1,216 @@
+
+static PyObject* pyopencv_KDTree_repr(PyObject* self)
+{
+    char str[1000];
+    sprintf(str, "<KDTree %p>", self);
+    return PyString_FromString(str);
+}
+
+
+static PyObject* pyopencv_KDTree_get_labels(pyopencv_KDTree_t* p, void *closure)
+{
+    return pyopencv_from(p->v->labels);
+}
+
+static PyObject* pyopencv_KDTree_get_maxDepth(pyopencv_KDTree_t* p, void *closure)
+{
+    return pyopencv_from(p->v->maxDepth);
+}
+
+static PyObject* pyopencv_KDTree_get_normType(pyopencv_KDTree_t* p, void *closure)
+{
+    return pyopencv_from(p->v->normType);
+}
+
+static int pyopencv_KDTree_set_normType(pyopencv_KDTree_t* p, PyObject *value, void *closure)
+{
+    if (value == NULL)
+    {
+        PyErr_SetString(PyExc_TypeError, "Cannot delete the normType attribute");
+        return -1;
+    }
+    return pyopencv_to(value, p->v->normType) ? 0 : -1;
+}
+
+static PyObject* pyopencv_KDTree_get_points(pyopencv_KDTree_t* p, void *closure)
+{
+    return pyopencv_from(p->v->points);
+}
+
+
+static PyGetSetDef pyopencv_KDTree_getseters[] =
+{
+    {(char*)"labels", (getter)pyopencv_KDTree_get_labels, NULL, (char*)"labels", NULL},
+    {(char*)"maxDepth", (getter)pyopencv_KDTree_get_maxDepth, NULL, (char*)"maxDepth", NULL},
+    {(char*)"normType", (getter)pyopencv_KDTree_get_normType, (setter)pyopencv_KDTree_set_normType, (char*)"normType", NULL},
+    {(char*)"points", (getter)pyopencv_KDTree_get_points, NULL, (char*)"points", NULL},
+    {NULL}  /* Sentinel */
+};
+
+static PyObject* pyopencv_KDTree_build(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_KDTree_Type))
+        return failmsgp("Incorrect type of self (must be 'KDTree' or its derivative)");
+    cv::KDTree* _self_ = ((pyopencv_KDTree_t*)self)->v.get();
+    {
+    PyObject* pyobj_points = NULL;
+    Mat points;
+    bool copyAndReorderPoints=false;
+
+    const char* keywords[] = { "points", "copyAndReorderPoints", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "O|b:KDTree.build", (char**)keywords, &pyobj_points, &copyAndReorderPoints) &&
+        pyopencv_to(pyobj_points, points, ArgInfo("points", 0)) )
+    {
+        ERRWRAP2(_self_->build(points, copyAndReorderPoints));
+        Py_RETURN_NONE;
+    }
+    }
+    PyErr_Clear();
+
+    {
+    PyObject* pyobj_points = NULL;
+    Mat points;
+    PyObject* pyobj_labels = NULL;
+    Mat labels;
+    bool copyAndReorderPoints=false;
+
+    const char* keywords[] = { "points", "labels", "copyAndReorderPoints", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "OO|b:KDTree.build", (char**)keywords, &pyobj_points, &pyobj_labels, &copyAndReorderPoints) &&
+        pyopencv_to(pyobj_points, points, ArgInfo("points", 0)) &&
+        pyopencv_to(pyobj_labels, labels, ArgInfo("labels", 0)) )
+    {
+        ERRWRAP2(_self_->build(points, labels, copyAndReorderPoints));
+        Py_RETURN_NONE;
+    }
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_KDTree_dims(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_KDTree_Type))
+        return failmsgp("Incorrect type of self (must be 'KDTree' or its derivative)");
+    cv::KDTree* _self_ = ((pyopencv_KDTree_t*)self)->v.get();
+    int retval;
+
+    if(PyObject_Size(args) == 0 && (kw == NULL || PyObject_Size(kw) == 0))
+    {
+        ERRWRAP2(retval = _self_->dims());
+        return pyopencv_from(retval);
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_KDTree_findNearest(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_KDTree_Type))
+        return failmsgp("Incorrect type of self (must be 'KDTree' or its derivative)");
+    cv::KDTree* _self_ = ((pyopencv_KDTree_t*)self)->v.get();
+    PyObject* pyobj_vec = NULL;
+    Mat vec;
+    int K=0;
+    int Emax=0;
+    PyObject* pyobj_neighborsIdx = NULL;
+    Mat neighborsIdx;
+    PyObject* pyobj_neighbors = NULL;
+    Mat neighbors;
+    PyObject* pyobj_dist = NULL;
+    Mat dist;
+    PyObject* pyobj_labels = NULL;
+    Mat labels;
+    int retval;
+
+    const char* keywords[] = { "vec", "K", "Emax", "neighborsIdx", "neighbors", "dist", "labels", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "Oii|OOOO:KDTree.findNearest", (char**)keywords, &pyobj_vec, &K, &Emax, &pyobj_neighborsIdx, &pyobj_neighbors, &pyobj_dist, &pyobj_labels) &&
+        pyopencv_to(pyobj_vec, vec, ArgInfo("vec", 0)) &&
+        pyopencv_to(pyobj_neighborsIdx, neighborsIdx, ArgInfo("neighborsIdx", 1)) &&
+        pyopencv_to(pyobj_neighbors, neighbors, ArgInfo("neighbors", 1)) &&
+        pyopencv_to(pyobj_dist, dist, ArgInfo("dist", 1)) &&
+        pyopencv_to(pyobj_labels, labels, ArgInfo("labels", 1)) )
+    {
+        ERRWRAP2(retval = _self_->findNearest(vec, K, Emax, neighborsIdx, neighbors, dist, labels));
+        return Py_BuildValue("(NNNNN)", pyopencv_from(retval), pyopencv_from(neighborsIdx), pyopencv_from(neighbors), pyopencv_from(dist), pyopencv_from(labels));
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_KDTree_findOrthoRange(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_KDTree_Type))
+        return failmsgp("Incorrect type of self (must be 'KDTree' or its derivative)");
+    cv::KDTree* _self_ = ((pyopencv_KDTree_t*)self)->v.get();
+    PyObject* pyobj_minBounds = NULL;
+    Mat minBounds;
+    PyObject* pyobj_maxBounds = NULL;
+    Mat maxBounds;
+    PyObject* pyobj_neighborsIdx = NULL;
+    Mat neighborsIdx;
+    PyObject* pyobj_neighbors = NULL;
+    Mat neighbors;
+    PyObject* pyobj_labels = NULL;
+    Mat labels;
+
+    const char* keywords[] = { "minBounds", "maxBounds", "neighborsIdx", "neighbors", "labels", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "OO|OOO:KDTree.findOrthoRange", (char**)keywords, &pyobj_minBounds, &pyobj_maxBounds, &pyobj_neighborsIdx, &pyobj_neighbors, &pyobj_labels) &&
+        pyopencv_to(pyobj_minBounds, minBounds, ArgInfo("minBounds", 0)) &&
+        pyopencv_to(pyobj_maxBounds, maxBounds, ArgInfo("maxBounds", 0)) &&
+        pyopencv_to(pyobj_neighborsIdx, neighborsIdx, ArgInfo("neighborsIdx", 1)) &&
+        pyopencv_to(pyobj_neighbors, neighbors, ArgInfo("neighbors", 1)) &&
+        pyopencv_to(pyobj_labels, labels, ArgInfo("labels", 1)) )
+    {
+        ERRWRAP2(_self_->findOrthoRange(minBounds, maxBounds, neighborsIdx, neighbors, labels));
+        return Py_BuildValue("(NNN)", pyopencv_from(neighborsIdx), pyopencv_from(neighbors), pyopencv_from(labels));
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_KDTree_getPoints(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_KDTree_Type))
+        return failmsgp("Incorrect type of self (must be 'KDTree' or its derivative)");
+    cv::KDTree* _self_ = ((pyopencv_KDTree_t*)self)->v.get();
+    PyObject* pyobj_idx = NULL;
+    Mat idx;
+    PyObject* pyobj_pts = NULL;
+    Mat pts;
+    PyObject* pyobj_labels = NULL;
+    Mat labels;
+
+    const char* keywords[] = { "idx", "pts", "labels", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "O|OO:KDTree.getPoints", (char**)keywords, &pyobj_idx, &pyobj_pts, &pyobj_labels) &&
+        pyopencv_to(pyobj_idx, idx, ArgInfo("idx", 0)) &&
+        pyopencv_to(pyobj_pts, pts, ArgInfo("pts", 1)) &&
+        pyopencv_to(pyobj_labels, labels, ArgInfo("labels", 1)) )
+    {
+        ERRWRAP2(_self_->getPoints(idx, pts, labels));
+        return Py_BuildValue("(NN)", pyopencv_from(pts), pyopencv_from(labels));
+    }
+
+    return NULL;
+}
+
+
+
+static PyMethodDef pyopencv_KDTree_methods[] =
+{
+    {"build", (PyCFunction)pyopencv_KDTree_build, METH_VARARGS | METH_KEYWORDS, "build(points[, copyAndReorderPoints]) -> None  or  build(points, labels[, copyAndReorderPoints]) -> None"},
+    {"dims", (PyCFunction)pyopencv_KDTree_dims, METH_VARARGS | METH_KEYWORDS, "dims() -> retval"},
+    {"findNearest", (PyCFunction)pyopencv_KDTree_findNearest, METH_VARARGS | METH_KEYWORDS, "findNearest(vec, K, Emax[, neighborsIdx[, neighbors[, dist[, labels]]]]) -> retval, neighborsIdx, neighbors, dist, labels"},
+    {"findOrthoRange", (PyCFunction)pyopencv_KDTree_findOrthoRange, METH_VARARGS | METH_KEYWORDS, "findOrthoRange(minBounds, maxBounds[, neighborsIdx[, neighbors[, labels]]]) -> neighborsIdx, neighbors, labels"},
+    {"getPoints", (PyCFunction)pyopencv_KDTree_getPoints, METH_VARARGS | METH_KEYWORDS, "getPoints(idx[, pts[, labels]]) -> pts, labels"},
+
+    {NULL,          NULL}
+};
+
+static void pyopencv_KDTree_specials(void)
+{
+    pyopencv_KDTree_Type.tp_base = NULL;
+    pyopencv_KDTree_Type.tp_dealloc = pyopencv_KDTree_dealloc;
+    pyopencv_KDTree_Type.tp_repr = pyopencv_KDTree_repr;
+    pyopencv_KDTree_Type.tp_getset = pyopencv_KDTree_getseters;
+    pyopencv_KDTree_Type.tp_methods = pyopencv_KDTree_methods;
+}

@@ -24,16 +24,7 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AutoLock.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="KCBSensor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="KCBv2Lib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="KinectList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,17 +35,12 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="KCBSensor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="KCBv2Lib.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="KinectList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="KCBFrames.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="KCBv2Lib_wrap.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="KCBv2Lib.i" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\KinectCommonBridge-v2\KCBv2\KCBv2.lib" />
   </ItemGroup>
 </Project>

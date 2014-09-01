@@ -1,0 +1,11 @@
+d:\dev\gccxml-0.9\bin\gccxml.exe  -I"C:\Program Files\Microsoft SDKs\Kinect\v2.0-DevPreview1406\inc"  -I"c:\Program Files (x86)\Windows Kits\8.1\Include\um" -I"c:\Program Files (x86)\Windows Kits\8.0\Include\shared" -I"d:\dev\msvc\2008\VC\include" -I"d:\projects\KinectCB\KinectCommonBridge-python\KCBv2" "d:\projects\KinectCB\KinectCommonBridge-python\KCBv2\KCBv2Lib.h" -fxml="C:\Users\MAXIM~1.KOS\AppData\Local\Temp\tmp3ftlf064.xml"
+
+gccxml  --gccxml-compiler msvc9 -I"C:\Program Files\Microsoft SDKs\Kinect\v2.0-DevPreview1406\inc"  -I"c:\Program Files (x86)\Windows Kits\8.0\Include\um" -I"c:\Program Files (x86)\Windows Kits\8.0\Include\shared" -I"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include" -I"d:\projects\KinectCB\KinectCommonBridge-python\KCBv2" "d:\projects\KinectCB\KinectCommonBridge-python\KCBv2\KCBv2Lib.h" -fxml="C:\Users\MAXIM~1.KOS\AppData\Local\Temp\tmp3ftlf064.xml"
+
+-------------------------------------
+
+D:\dev\msvc\2008\VC\vcvarsall.bat x86
+
+d:/dev/msvc/2008/VC/bin/cl.exe /O2 /Oi /GL /I "c:\Program Files (x86)\Windows Kits\8.1\Include\shared\\" /I "C:\Program Files\Microsoft SDKs\Kinect\v2.0-PublicPreview1407\inc" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_USRDLL" /D "KCBV2LIB_EXPORTS" /D "_WINDLL" /D "_UNICODE" /D "UNICODE" /FD /EHsc /MD /Gy /Fo"Release\\" /Fd"Release\vc90.pdb" /W3 /c /Zi /TP ".\KCBv2Lib.cpp" ".\KCBSensor.cpp" ".\KCBFrames.cpp" ".\dllmain.cpp"
+
+cl.exe /O2 /Oi /GL /I "c:\Program Files (x86)\Windows Kits\8.1\Include\shared\\" /I "C:\Program Files\Microsoft SDKs\Kinect\v2.0-PublicPreview1407\inc" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_USRDLL" /D "KCBV2LIB_EXPORTS" /D "_WINDLL" /D "_UNICODE" /D "UNICODE" /FD /EHsc /MD /Gy /Fo"Release\\" /Fd"d:\projects\KinectCB\KinectCommonBridge-v2-2008\KCBv2Lib\Release\vc90.pdb" /W3 /c /Zi /TP "d:\projects\KinectCB\KinectCommonBridge-v2-2008\KCBv2Lib\KCBv2Lib.cpp" "d:\projects\KinectCB\KinectCommonBridge-v2-2008\KCBv2Lib\KCBSensor.cpp" "d:\projects\KinectCB\KinectCommonBridge-v2-2008\KCBv2Lib\KCBFrames.cpp" "d:\projects\KinectCB\KinectCommonBridge-v2-2008\KCBv2Lib\dllmain.cpp"

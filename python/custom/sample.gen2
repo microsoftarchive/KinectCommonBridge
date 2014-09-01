@@ -1,0 +1,392 @@
+
+static PyObject* pyopencv_Algorithm_repr(PyObject* self)
+{
+    char str[1000];
+    sprintf(str, "<Algorithm %p>", self);
+    return PyString_FromString(str);
+}
+
+
+
+static PyGetSetDef pyopencv_Algorithm_getseters[] =
+{
+    {NULL}  /* Sentinel */
+};
+
+static PyObject* pyopencv_Algorithm_getAlgorithm(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_Algorithm_Type))
+        return failmsgp("Incorrect type of self (must be 'Algorithm' or its derivative)");
+    cv::Algorithm* _self_ = ((pyopencv_Algorithm_t*)self)->v.get();
+    PyObject* pyobj_name = NULL;
+    String name;
+    Ptr<Algorithm> retval;
+
+    const char* keywords[] = { "name", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "O:Algorithm.getAlgorithm", (char**)keywords, &pyobj_name) &&
+        pyopencv_to(pyobj_name, name, ArgInfo("name", 0)) )
+    {
+        ERRWRAP2(retval = _self_->getAlgorithm(name));
+        return pyopencv_from(retval);
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_Algorithm_getBool(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_Algorithm_Type))
+        return failmsgp("Incorrect type of self (must be 'Algorithm' or its derivative)");
+    cv::Algorithm* _self_ = ((pyopencv_Algorithm_t*)self)->v.get();
+    PyObject* pyobj_name = NULL;
+    String name;
+    bool retval;
+
+    const char* keywords[] = { "name", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "O:Algorithm.getBool", (char**)keywords, &pyobj_name) &&
+        pyopencv_to(pyobj_name, name, ArgInfo("name", 0)) )
+    {
+        ERRWRAP2(retval = _self_->getBool(name));
+        return pyopencv_from(retval);
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_Algorithm_getDouble(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_Algorithm_Type))
+        return failmsgp("Incorrect type of self (must be 'Algorithm' or its derivative)");
+    cv::Algorithm* _self_ = ((pyopencv_Algorithm_t*)self)->v.get();
+    PyObject* pyobj_name = NULL;
+    String name;
+    double retval;
+
+    const char* keywords[] = { "name", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "O:Algorithm.getDouble", (char**)keywords, &pyobj_name) &&
+        pyopencv_to(pyobj_name, name, ArgInfo("name", 0)) )
+    {
+        ERRWRAP2(retval = _self_->getDouble(name));
+        return pyopencv_from(retval);
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_Algorithm_getInt(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_Algorithm_Type))
+        return failmsgp("Incorrect type of self (must be 'Algorithm' or its derivative)");
+    cv::Algorithm* _self_ = ((pyopencv_Algorithm_t*)self)->v.get();
+    PyObject* pyobj_name = NULL;
+    String name;
+    int retval;
+
+    const char* keywords[] = { "name", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "O:Algorithm.getInt", (char**)keywords, &pyobj_name) &&
+        pyopencv_to(pyobj_name, name, ArgInfo("name", 0)) )
+    {
+        ERRWRAP2(retval = _self_->getInt(name));
+        return pyopencv_from(retval);
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_Algorithm_getMat(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_Algorithm_Type))
+        return failmsgp("Incorrect type of self (must be 'Algorithm' or its derivative)");
+    cv::Algorithm* _self_ = ((pyopencv_Algorithm_t*)self)->v.get();
+    PyObject* pyobj_name = NULL;
+    String name;
+    Mat retval;
+
+    const char* keywords[] = { "name", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "O:Algorithm.getMat", (char**)keywords, &pyobj_name) &&
+        pyopencv_to(pyobj_name, name, ArgInfo("name", 0)) )
+    {
+        ERRWRAP2(retval = _self_->getMat(name));
+        return pyopencv_from(retval);
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_Algorithm_getMatVector(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_Algorithm_Type))
+        return failmsgp("Incorrect type of self (must be 'Algorithm' or its derivative)");
+    cv::Algorithm* _self_ = ((pyopencv_Algorithm_t*)self)->v.get();
+    PyObject* pyobj_name = NULL;
+    String name;
+    vector_Mat retval;
+
+    const char* keywords[] = { "name", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "O:Algorithm.getMatVector", (char**)keywords, &pyobj_name) &&
+        pyopencv_to(pyobj_name, name, ArgInfo("name", 0)) )
+    {
+        ERRWRAP2(retval = _self_->getMatVector(name));
+        return pyopencv_from(retval);
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_Algorithm_getParams(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_Algorithm_Type))
+        return failmsgp("Incorrect type of self (must be 'Algorithm' or its derivative)");
+    cv::Algorithm* _self_ = ((pyopencv_Algorithm_t*)self)->v.get();
+    vector_String names;
+
+    if(PyObject_Size(args) == 0 && (kw == NULL || PyObject_Size(kw) == 0))
+    {
+        ERRWRAP2(_self_->getParams(names));
+        return pyopencv_from(names);
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_Algorithm_getString(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_Algorithm_Type))
+        return failmsgp("Incorrect type of self (must be 'Algorithm' or its derivative)");
+    cv::Algorithm* _self_ = ((pyopencv_Algorithm_t*)self)->v.get();
+    PyObject* pyobj_name = NULL;
+    String name;
+    String retval;
+
+    const char* keywords[] = { "name", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "O:Algorithm.getString", (char**)keywords, &pyobj_name) &&
+        pyopencv_to(pyobj_name, name, ArgInfo("name", 0)) )
+    {
+        ERRWRAP2(retval = _self_->getString(name));
+        return pyopencv_from(retval);
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_Algorithm_paramHelp(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_Algorithm_Type))
+        return failmsgp("Incorrect type of self (must be 'Algorithm' or its derivative)");
+    cv::Algorithm* _self_ = ((pyopencv_Algorithm_t*)self)->v.get();
+    PyObject* pyobj_name = NULL;
+    String name;
+    String retval;
+
+    const char* keywords[] = { "name", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "O:Algorithm.paramHelp", (char**)keywords, &pyobj_name) &&
+        pyopencv_to(pyobj_name, name, ArgInfo("name", 0)) )
+    {
+        ERRWRAP2(retval = _self_->paramHelp(name));
+        return pyopencv_from(retval);
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_Algorithm_paramType(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_Algorithm_Type))
+        return failmsgp("Incorrect type of self (must be 'Algorithm' or its derivative)");
+    cv::Algorithm* _self_ = ((pyopencv_Algorithm_t*)self)->v.get();
+    PyObject* pyobj_name = NULL;
+    String name;
+    int retval;
+
+    const char* keywords[] = { "name", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "O:Algorithm.paramType", (char**)keywords, &pyobj_name) &&
+        pyopencv_to(pyobj_name, name, ArgInfo("name", 0)) )
+    {
+        ERRWRAP2(retval = _self_->paramType(name));
+        return pyopencv_from(retval);
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_Algorithm_setAlgorithm(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_Algorithm_Type))
+        return failmsgp("Incorrect type of self (must be 'Algorithm' or its derivative)");
+    cv::Algorithm* _self_ = ((pyopencv_Algorithm_t*)self)->v.get();
+    PyObject* pyobj_name = NULL;
+    String name;
+    PyObject* pyobj_value = NULL;
+    Ptr<Algorithm> value;
+
+    const char* keywords[] = { "name", "value", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "OO:Algorithm.setAlgorithm", (char**)keywords, &pyobj_name, &pyobj_value) &&
+        pyopencv_to(pyobj_name, name, ArgInfo("name", 0)) &&
+        pyopencv_to(pyobj_value, value, ArgInfo("value", 0)) )
+    {
+        ERRWRAP2(_self_->setAlgorithm(name, value));
+        Py_RETURN_NONE;
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_Algorithm_setBool(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_Algorithm_Type))
+        return failmsgp("Incorrect type of self (must be 'Algorithm' or its derivative)");
+    cv::Algorithm* _self_ = ((pyopencv_Algorithm_t*)self)->v.get();
+    PyObject* pyobj_name = NULL;
+    String name;
+    bool value=0;
+
+    const char* keywords[] = { "name", "value", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "Ob:Algorithm.setBool", (char**)keywords, &pyobj_name, &value) &&
+        pyopencv_to(pyobj_name, name, ArgInfo("name", 0)) )
+    {
+        ERRWRAP2(_self_->setBool(name, value));
+        Py_RETURN_NONE;
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_Algorithm_setDouble(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_Algorithm_Type))
+        return failmsgp("Incorrect type of self (must be 'Algorithm' or its derivative)");
+    cv::Algorithm* _self_ = ((pyopencv_Algorithm_t*)self)->v.get();
+    PyObject* pyobj_name = NULL;
+    String name;
+    double value=0;
+
+    const char* keywords[] = { "name", "value", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "Od:Algorithm.setDouble", (char**)keywords, &pyobj_name, &value) &&
+        pyopencv_to(pyobj_name, name, ArgInfo("name", 0)) )
+    {
+        ERRWRAP2(_self_->setDouble(name, value));
+        Py_RETURN_NONE;
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_Algorithm_setInt(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_Algorithm_Type))
+        return failmsgp("Incorrect type of self (must be 'Algorithm' or its derivative)");
+    cv::Algorithm* _self_ = ((pyopencv_Algorithm_t*)self)->v.get();
+    PyObject* pyobj_name = NULL;
+    String name;
+    int value=0;
+
+    const char* keywords[] = { "name", "value", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "Oi:Algorithm.setInt", (char**)keywords, &pyobj_name, &value) &&
+        pyopencv_to(pyobj_name, name, ArgInfo("name", 0)) )
+    {
+        ERRWRAP2(_self_->setInt(name, value));
+        Py_RETURN_NONE;
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_Algorithm_setMat(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_Algorithm_Type))
+        return failmsgp("Incorrect type of self (must be 'Algorithm' or its derivative)");
+    cv::Algorithm* _self_ = ((pyopencv_Algorithm_t*)self)->v.get();
+    PyObject* pyobj_name = NULL;
+    String name;
+    PyObject* pyobj_value = NULL;
+    Mat value;
+
+    const char* keywords[] = { "name", "value", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "OO:Algorithm.setMat", (char**)keywords, &pyobj_name, &pyobj_value) &&
+        pyopencv_to(pyobj_name, name, ArgInfo("name", 0)) &&
+        pyopencv_to(pyobj_value, value, ArgInfo("value", 0)) )
+    {
+        ERRWRAP2(_self_->setMat(name, value));
+        Py_RETURN_NONE;
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_Algorithm_setMatVector(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_Algorithm_Type))
+        return failmsgp("Incorrect type of self (must be 'Algorithm' or its derivative)");
+    cv::Algorithm* _self_ = ((pyopencv_Algorithm_t*)self)->v.get();
+    PyObject* pyobj_name = NULL;
+    String name;
+    PyObject* pyobj_value = NULL;
+    vector_Mat value;
+
+    const char* keywords[] = { "name", "value", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "OO:Algorithm.setMatVector", (char**)keywords, &pyobj_name, &pyobj_value) &&
+        pyopencv_to(pyobj_name, name, ArgInfo("name", 0)) &&
+        pyopencv_to(pyobj_value, value, ArgInfo("value", 0)) )
+    {
+        ERRWRAP2(_self_->setMatVector(name, value));
+        Py_RETURN_NONE;
+    }
+
+    return NULL;
+}
+
+static PyObject* pyopencv_Algorithm_setString(PyObject* self, PyObject* args, PyObject* kw)
+{
+    if(!PyObject_TypeCheck(self, &pyopencv_Algorithm_Type))
+        return failmsgp("Incorrect type of self (must be 'Algorithm' or its derivative)");
+    cv::Algorithm* _self_ = ((pyopencv_Algorithm_t*)self)->v.get();
+    PyObject* pyobj_name = NULL;
+    String name;
+    PyObject* pyobj_value = NULL;
+    String value;
+
+    const char* keywords[] = { "name", "value", NULL };
+    if( PyArg_ParseTupleAndKeywords(args, kw, "OO:Algorithm.setString", (char**)keywords, &pyobj_name, &pyobj_value) &&
+        pyopencv_to(pyobj_name, name, ArgInfo("name", 0)) &&
+        pyopencv_to(pyobj_value, value, ArgInfo("value", 0)) )
+    {
+        ERRWRAP2(_self_->setString(name, value));
+        Py_RETURN_NONE;
+    }
+
+    return NULL;
+}
+
+
+
+static PyMethodDef pyopencv_Algorithm_methods[] =
+{
+    {"getAlgorithm", (PyCFunction)pyopencv_Algorithm_getAlgorithm, METH_VARARGS | METH_KEYWORDS, "getAlgorithm(name) -> retval"},
+    {"getBool", (PyCFunction)pyopencv_Algorithm_getBool, METH_VARARGS | METH_KEYWORDS, "getBool(name) -> retval"},
+    {"getDouble", (PyCFunction)pyopencv_Algorithm_getDouble, METH_VARARGS | METH_KEYWORDS, "getDouble(name) -> retval"},
+    {"getInt", (PyCFunction)pyopencv_Algorithm_getInt, METH_VARARGS | METH_KEYWORDS, "getInt(name) -> retval"},
+    {"getMat", (PyCFunction)pyopencv_Algorithm_getMat, METH_VARARGS | METH_KEYWORDS, "getMat(name) -> retval"},
+    {"getMatVector", (PyCFunction)pyopencv_Algorithm_getMatVector, METH_VARARGS | METH_KEYWORDS, "getMatVector(name) -> retval"},
+    {"getParams", (PyCFunction)pyopencv_Algorithm_getParams, METH_VARARGS | METH_KEYWORDS, "getParams() -> names"},
+    {"getString", (PyCFunction)pyopencv_Algorithm_getString, METH_VARARGS | METH_KEYWORDS, "getString(name) -> retval"},
+    {"paramHelp", (PyCFunction)pyopencv_Algorithm_paramHelp, METH_VARARGS | METH_KEYWORDS, "paramHelp(name) -> retval"},
+    {"paramType", (PyCFunction)pyopencv_Algorithm_paramType, METH_VARARGS | METH_KEYWORDS, "paramType(name) -> retval"},
+    {"setAlgorithm", (PyCFunction)pyopencv_Algorithm_setAlgorithm, METH_VARARGS | METH_KEYWORDS, "setAlgorithm(name, value) -> None"},
+    {"setBool", (PyCFunction)pyopencv_Algorithm_setBool, METH_VARARGS | METH_KEYWORDS, "setBool(name, value) -> None"},
+    {"setDouble", (PyCFunction)pyopencv_Algorithm_setDouble, METH_VARARGS | METH_KEYWORDS, "setDouble(name, value) -> None"},
+    {"setInt", (PyCFunction)pyopencv_Algorithm_setInt, METH_VARARGS | METH_KEYWORDS, "setInt(name, value) -> None"},
+    {"setMat", (PyCFunction)pyopencv_Algorithm_setMat, METH_VARARGS | METH_KEYWORDS, "setMat(name, value) -> None"},
+    {"setMatVector", (PyCFunction)pyopencv_Algorithm_setMatVector, METH_VARARGS | METH_KEYWORDS, "setMatVector(name, value) -> None"},
+    {"setString", (PyCFunction)pyopencv_Algorithm_setString, METH_VARARGS | METH_KEYWORDS, "setString(name, value) -> None"},
+
+    {NULL,          NULL}
+};
+
+static void pyopencv_Algorithm_specials(void)
+{
+    pyopencv_Algorithm_Type.tp_base = NULL;
+    pyopencv_Algorithm_Type.tp_dealloc = pyopencv_Algorithm_dealloc;
+    pyopencv_Algorithm_Type.tp_repr = pyopencv_Algorithm_repr;
+    pyopencv_Algorithm_Type.tp_getset = pyopencv_Algorithm_getseters;
+    pyopencv_Algorithm_Type.tp_methods = pyopencv_Algorithm_methods;
+}
