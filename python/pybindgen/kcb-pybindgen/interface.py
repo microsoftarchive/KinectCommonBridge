@@ -15,9 +15,8 @@ from pybindgen.typehandlers.base import ReverseWrapperBase
 class UCharBufferReturn(ReturnValue):
     CTYPES = []
 
-    def __init__(self, ctype, length_expression):
+    def __init__(self, ctype):
         super(UCharBufferReturn, self).__init__(ctype, is_const=False)
-        self.length_expression = length_expression
 
     def convert_c_to_python(self, wrapper):
         pybuf = wrapper.after_call.declare_variable("PyObject*", "pybuf")
@@ -55,8 +54,7 @@ def generate_module(out_file=sys.stdout):
 
     kcb_audio_frame = mod.add_struct('KCBAudioFrame')
     kcb_audio_frame.add_instance_attribute('cAudioBufferSize', 'unsigned long')  # ULONG
-    kcb_audio_frame.add_instance_attribute('pAudioBuffer',
-                                           UCharBufferReturn("unsigned char*", "self->obj->cAudioBufferSize"))  # byte*
+    kcb_audio_frame.add_instance_attribute('pAudioBuffer', UCharBufferReturn("unsigned char*"))  # byte*
     kcb_audio_frame.add_instance_attribute('ulBytesRead', 'unsigned long')  # ULONG
     kcb_audio_frame.add_instance_attribute('fBeamAngle', 'float')  # FLOAT
     kcb_audio_frame.add_instance_attribute('fBeamAngleConfidence', 'float')  # FLOAT
@@ -149,8 +147,7 @@ def generate_module(out_file=sys.stdout):
 
     kcb_body_index_frame = mod.add_struct('KCBBodyIndexFrame')
     kcb_body_index_frame.add_instance_attribute('Size', 'unsigned long')  # ULONG
-    kcb_body_index_frame.add_instance_attribute('Buffer',
-                                                UCharBufferReturn("unsigned char*", "self->obj->Size"))  # byte*
+    kcb_body_index_frame.add_instance_attribute('Buffer', UCharBufferReturn("unsigned char*"))  # byte*
     kcb_body_index_frame.add_instance_attribute('TimeStamp', 'long long')  # LONGLONG
 
     #kcb_color_frame = mod.add_struct('KCBColorFrame')
