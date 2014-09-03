@@ -1,5 +1,5 @@
-﻿/***********************************************************************************************************
-Copyright © Microsoft Open Technologies, Inc.
+/***********************************************************************************************************
+Copyright � Microsoft Open Technologies, Inc.
 All Rights Reserved
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
 except in compliance with the License. You may obtain a copy of the License at
@@ -876,7 +876,7 @@ KINECT_CB HRESULT APIENTRY KCBGetAllFrameData(_In_ KCBHANDLE kcbHandle,
         CHECK_HR(hr = pBodyFrame->GetAndRefreshBodyData(pstBodyFrame->Count, pstBodyFrame->Bodies));
 
         // get timestamp
-        CHECK_HR(hr = pBodyFrame->get_RelativeTime(reinterpret_cast<TIMESPAN*>(pstBodyFrame->TimeStamp)));
+        CHECK_HR(hr = pBodyFrame->get_RelativeTime(reinterpret_cast<TIMESPAN*>(&pstBodyFrame->TimeStamp)));
     }
     
     if(nullptr != pBodyIndexFrame)
@@ -885,7 +885,7 @@ KINECT_CB HRESULT APIENTRY KCBGetAllFrameData(_In_ KCBHANDLE kcbHandle,
         CHECK_HR(hr = pBodyIndexFrame->CopyFrameDataToArray(pstBodyIndexFrame->Size, pstBodyIndexFrame->Buffer));
 
         // get timestamp
-        CHECK_HR(hr = pBodyIndexFrame->get_RelativeTime(reinterpret_cast<TIMESPAN*>(pstBodyIndexFrame->TimeStamp)));
+        CHECK_HR(hr = pBodyIndexFrame->get_RelativeTime(reinterpret_cast<TIMESPAN*>(&pstBodyIndexFrame->TimeStamp)));
     }
 
     if(nullptr != pColorFrame)
@@ -901,7 +901,7 @@ KINECT_CB HRESULT APIENTRY KCBGetAllFrameData(_In_ KCBHANDLE kcbHandle,
         }
 
         // get timestamp
-        CHECK_HR(hr = pColorFrame->get_RelativeTime(reinterpret_cast<TIMESPAN*>(pstColorFrame->TimeStamp)));
+        CHECK_HR(hr = pColorFrame->get_RelativeTime(reinterpret_cast<TIMESPAN*>(&pstColorFrame->TimeStamp)));
     }
 
     if(nullptr != pDepthFrame)
@@ -910,7 +910,7 @@ KINECT_CB HRESULT APIENTRY KCBGetAllFrameData(_In_ KCBHANDLE kcbHandle,
         CHECK_HR(hr = pDepthFrame->CopyFrameDataToArray(pstDepthFrame->Size, pstDepthFrame->Buffer));
 
         // get timestamp
-        CHECK_HR(hr = pDepthFrame->get_RelativeTime(reinterpret_cast<TIMESPAN*>(pstDepthFrame->TimeStamp)));
+        CHECK_HR(hr = pDepthFrame->get_RelativeTime(reinterpret_cast<TIMESPAN*>(&pstDepthFrame->TimeStamp)));
     }
 
     if(nullptr != pIRFrame)
@@ -919,7 +919,7 @@ KINECT_CB HRESULT APIENTRY KCBGetAllFrameData(_In_ KCBHANDLE kcbHandle,
         CHECK_HR(hr = pIRFrame->CopyFrameDataToArray(pstInfraredFrame->Size, pstInfraredFrame->Buffer));
 
         // get timestamp
-        CHECK_HR(hr = pIRFrame->get_RelativeTime(reinterpret_cast<TIMESPAN*>(pstInfraredFrame->TimeStamp)));
+        CHECK_HR(hr = pIRFrame->get_RelativeTime(reinterpret_cast<TIMESPAN*>(&pstInfraredFrame->TimeStamp)));
     }
 
     if(nullptr != pLIRFrame)
@@ -928,7 +928,7 @@ KINECT_CB HRESULT APIENTRY KCBGetAllFrameData(_In_ KCBHANDLE kcbHandle,
         CHECK_HR(hr = pLIRFrame->CopyFrameDataToArray(pstLongExposureInfraredFrame->Size, pstLongExposureInfraredFrame->Buffer));
 
         // get timestamp
-        CHECK_HR(hr = pLIRFrame->get_RelativeTime(reinterpret_cast<TIMESPAN*>(pstLongExposureInfraredFrame->TimeStamp)));
+        CHECK_HR(hr = pLIRFrame->get_RelativeTime(reinterpret_cast<TIMESPAN*>(&pstLongExposureInfraredFrame->TimeStamp)));
     }
 
 done:
