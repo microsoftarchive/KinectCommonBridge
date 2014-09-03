@@ -986,7 +986,7 @@ bool KCBSensor::AnyFrameReady()
     }
 
     // if any frame is ready we return true
-    DWORD dwResult = WaitForMultipleObjectsEx((DWORD) events.size(), events.data(), false, 0, FALSE);
+    DWORD dwResult = WaitForMultipleObjectsEx((DWORD) events.size(), &events.front(), false, 0, FALSE);
     if (dwResult == WAIT_OBJECT_0)
     {
         return true;
@@ -1010,7 +1010,7 @@ bool KCBSensor::AllFramesReady()
     }
 
     // if all frame events as set, return true
-    DWORD dwResult = WaitForMultipleObjectsEx((DWORD) events.size(), events.data(), true, 0, false);
+    DWORD dwResult = WaitForMultipleObjectsEx((DWORD) events.size(), &events.front(), true, 0, false);
     if (dwResult == WAIT_OBJECT_0)
     {
         return true;
