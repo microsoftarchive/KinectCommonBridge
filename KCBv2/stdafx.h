@@ -21,10 +21,11 @@ See the Apache 2 License for the specific language governing permissions and lim
 
 #include "targetver.h"
 
-#ifndef WIN32_LEAN_AND_MEAN
-#define WIN32_LEAN_AND_MEAN     // Exclude rarely-used stuff from Windows headers
-#endif
+//#if _MSC_VER < 1600 //MSVC version <8
+     #include "NullptrEmu.h"
+//#endif
 
+#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 // Windows Header Files:
 #include <windows.h>
 

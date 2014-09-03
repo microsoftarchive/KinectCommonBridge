@@ -41,7 +41,7 @@ def generate_module(out_file=sys.stdout):
     :param out_file: file to hold generated output
     """
     mod = pybindgen.Module('KCBv2Lib')
-    mod.add_include('"KCBv2Lib.h"')
+    mod.add_include('"../../../KCBv2/KCBv2Lib.h"')
 
     kcb_frame_description = mod.add_struct('KCBFrameDescription')
     kcb_frame_description.add_instance_attribute('width', 'int')

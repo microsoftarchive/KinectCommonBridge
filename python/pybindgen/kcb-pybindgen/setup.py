@@ -77,7 +77,12 @@ EXTRA_COMPILE_ARGS = ["/EHsc",  # catch only c++ exceptions
 ]  # + EXTRA_COMPILE_ARGS_MACRO
 
 # Source files included into compilation process
-SRC = ['stdafx.cpp', 'dllmain.cpp', 'KinectList.cpp', 'KCBFrames.cpp', 'KCBSensor.cpp', 'KCBv2Lib.cpp']
+SRC = ['../../../KCBv2/stdafx.cpp',
+       '../../../KCBv2/dllmain.cpp',
+       '../../../KCBv2/KinectList.cpp',
+       '../../../KCBv2/KCBFrames.cpp',
+       '../../../KCBv2/KCBSensor.cpp',
+       '../../../KCBv2/KCBv2Lib.cpp']
 
 try:
     os.mkdir("build")
