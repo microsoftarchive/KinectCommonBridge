@@ -12,7 +12,7 @@ CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABLITY OR NON-INF
 See the Apache 2 License for the specific language governing permissions and limitations under the License.
 ***********************************************************************************************************/
 // stdafx.cpp : source file that includes just the standard includes
-// KCBv2.pch will be the pre-compiled header
+// KCBv2Lib.pch will be the pre-compiled header
 // stdafx.obj will contain the pre-compiled type information
 
 #include "stdafx.h"
