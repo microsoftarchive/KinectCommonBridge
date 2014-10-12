@@ -25,9 +25,8 @@ KINECT_CB HRESULT APIENTRY KCBCreateBodyFrame(_Out_ KCBBodyFrame** ppBodyFrame)
     // do we need to create the buffer
     KCBBodyFrame* pFrame = new KCBBodyFrame();
 
-    IBody* pBodies[BODY_COUNT] = {0};
     pFrame->Count = BODY_COUNT;
-    pFrame->Bodies = pBodies;
+    pFrame->Bodies = new IBody* [BODY_COUNT]();
     pFrame->TimeStamp = 0;
 
     *ppBodyFrame = pFrame;
