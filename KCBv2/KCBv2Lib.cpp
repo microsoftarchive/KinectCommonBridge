@@ -104,17 +104,27 @@ HRESULT FindAudioDevice(const WCHAR* wsName, IAudioClient** ppClient)
     // Each loop until we find the Kinect USB Audio device
     for (ULONG i = 0; i < count; ++i)
     {
-        CHECK_HR(hr = pCollection->Item(i, &pEndpoint));
+        hr = pCollection->Item(i, &pEndpoint);
+		if (!SUCCEEDED(hr)) {
+			continue;
+		}
 
         // get the property store from the device
-        CHECK_HR(hr = pEndpoint->OpenPropertyStore(STGM_READ, &pProps));
+        hr = pEndpoint->OpenPropertyStore(STGM_READ, &pProps);
+		if (!SUCCEEDED(hr)) {
+			continue;
+		}
 
         // Initialize container for property value.
         PROPVARIANT varName;
         PropVariantInit(&varName);
 
         // Get the endpoint's friendly-name property.
-        CHECK_HR(hr = pProps->GetValue(PKEY_Device_FriendlyName, &varName));
+        hr = pProps->GetValue(PKEY_Device_FriendlyName, &varName);
+
+		if (!SUCCEEDED(hr)) {
+			continue;
+		}
 
         // get the name from the property store
         name = varName.pwszVal;
