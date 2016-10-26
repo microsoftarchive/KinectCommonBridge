@@ -900,7 +900,7 @@ HRESULT KCBSensor::GetAudioBuffer(ULONG cb, _Out_writes_bytes_to_(cb, *pcbRead) 
         SAFE_RELEASE(pAudioBeam);
     }
 
-    CHECK_HR(hr = m_pAudioStream->Read((void *)cbBuffer, sizeof(cb), pcbRead));
+    CHECK_HR(hr = m_pAudioStream->Read((void *)cbBuffer, cb, pcbRead));
 
     if (*pcbRead > 0)
     {
